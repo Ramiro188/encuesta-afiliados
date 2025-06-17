@@ -1,0 +1,47 @@
+{
+  "title": "Tu Voz Tu Salud Perú 🩺🇵🇪",
+  "description": "Tu opinión vale. Participa por S/10 y ayúdanos a mejorar el sistema de salud.",
+  "logo": "attached_logo",
+  "questions": [
+    {
+      "type": "short_text",
+      "label": "¿Cuál es tu edad?",
+      "required": true
+    },
+    {
+      "type": "dropdown",
+      "label": "¿Tienes alguna enfermedad o condición médica crónica?",
+      "options": [
+        "Sí",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "type": "long_text",
+      "label": "¿Qué cambiarías del sistema de salud en Perú?",
+      "required": false
+    },
+    {
+      "type": "yes_no",
+      "label": "¿Usarías una app gratuita para agendar citas, guardar tu historia clínica y hablar con médicos?",
+      "required": true
+    },
+    {
+      "type": "email",
+      "label": "¿Deseas participar del sorteo de S/10?",
+      "required": true
+    },
+    {
+      "type": "phone",
+      "label": "Tu número de WhatsApp (obligatorio para el sorteo)",
+      "required_if": "sí"
+    },
+    {
+      "type": "short_text",
+      "label": "Código de Afiliado (si te compartieron el enlace)",
+      "required": false
+    }
+  ],
+  "thank_you_message": "**¡Gracias por participar!** 🎉\n\nYa estás participando del sorteo 🤑. Si compartes tu enlace y más personas responden, puedes ganar *S/100 extra* como afiliado top 💰🔥. ¡Esta es tu voz, esta es tu salud! 🫶"
+}
