@@ -4,166 +4,634 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎯 Campaña de Referidos - Gana S/100</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* AQUI VA TODO TU CSS ORIGINAL SIN CAMBIOS */
-        /* Por razones de espacio, se asume que sigue intacto como el que me pasaste */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff41;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Efectos de fondo animados */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41; }
+            to { text-shadow: 0 0 30px #00ff41, 0 0 50px #00ff41; }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00bfff;
+            margin-bottom: 20px;
+        }
+        
+        /* Temporizador */
+        .timer-container {
+            background: linear-gradient(145deg, rgba(0, 255, 65, 0.1), rgba(0, 191, 255, 0.1));
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+        
+        .timer-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ff6b6b;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .timer-unit {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00bfff;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .timer-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #00ff41;
+            display: block;
+        }
+        
+        .timer-label {
+            font-size: 0.8rem;
+            color: #00bfff;
+            text-transform: uppercase;
+        }
+        
+        /* Formulario */
+        .form-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00bfff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.3);
+        }
+        
+        .form-section h2 {
+            color: #00bfff;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ff41;
+            font-weight: 700;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            color: #00ff41;
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #00bfff;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #00ff41, #00bfff);
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 30px rgba(0, 255, 65, 0.7);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        /* Sección de éxito */
+        .success-section {
+            background: linear-gradient(145deg, rgba(0, 255, 65, 0.1), rgba(0, 191, 255, 0.1));
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .success-title {
+            font-size: 2rem;
+            color: #00ff41;
+            margin-bottom: 20px;
+        }
+        
+        .affiliate-link {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00bfff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            word-break: break-all;
+            color: #00bfff;
+            font-family: monospace;
+        }
+        
+        .copy-btn {
+            background: #00bfff;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #0099cc;
+            transform: scale(1.05);
+        }
+        
+        /* Ranking */
+        .ranking-section {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff6b6b;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+        }
+        
+        .ranking-section h2 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .ranking-table th,
+        .ranking-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        
+        .ranking-table th {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            font-weight: 900;
+        }
+        
+        .ranking-table tr:nth-child(even) {
+            background: rgba(0, 255, 65, 0.05);
+        }
+        
+        .ranking-table tr:hover {
+            background: rgba(0, 191, 255, 0.1);
+        }
+        
+        .position {
+            color: #ffff00;
+            font-weight: 900;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #00bfff;
+            font-style: italic;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .timer {
+                gap: 10px;
+            }
+            
+            .timer-unit {
+                min-width: 60px;
+                padding: 10px;
+            }
+            
+            .timer-number {
+                font-size: 1.5rem;
+            }
+            
+            .form-section,
+            .ranking-section {
+                padding: 20px;
+            }
+        }
+        
+        .alert {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        .alert-error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff0000;
+            color: #ff6b6b;
+        }
+        
+        .alert-success {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- Encabezado, temporizador, formulario, etc. sin cambios -->
-</div>
+    <div class="container">
+        <header class="header">
+            <h1>🎯 CAMPAÑA DE REFERIDOS</h1>
+            <p class="subtitle">¡Participa y gana S/100! Comparte tu enlace y multiplica tus oportunidades</p>
+        </header>
 
-<script>
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjLwL9IoRgdlXXfgf7aWHhBeCDRqeooxGMgdubmYRd5zW0F4FIL9iCHXTQGYuHRuR3/exec';
-    const CAMPAIGN_END = new Date('2025-07-06T20:00:00-05:00');
-    const BASE_URL = window.location.origin + window.location.pathname;
+        <!-- Temporizador -->
+        <div class="timer-container">
+            <h3 class="timer-title">⏰ Tiempo restante de la campaña</h3>
+            <div class="timer" id="countdown">
+                <div class="timer-unit">
+                    <span class="timer-number" id="days">00</span>
+                    <span class="timer-label">Días</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-number" id="hours">00</span>
+                    <span class="timer-label">Horas</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-number" id="minutes">00</span>
+                    <span class="timer-label">Minutos</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-number" id="seconds">00</span>
+                    <span class="timer-label">Segundos</span>
+                </div>
+            </div>
+        </div>
 
-    let userAffiliateId = null;
-    let referredBy = null;
+        <!-- Formulario de registro -->
+        <div class="form-section" id="registration-form">
+            <h2>📝 Regístrate para participar</h2>
+            <form id="userForm">
+                <div class="form-group">
+                    <label for="nombre">👤 Nombre completo *</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="correo">📧 Correo electrónico *</label>
+                    <input type="email" id="correo" name="correo" required>
+                </div>
+                <div class="form-group">
+                    <label for="yape">💳 Número de Yape *</label>
+                    <input type="tel" id="yape" name="yape" required placeholder="Ej: 987654321">
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    🚀 Registrarme y obtener mi enlace
+                </button>
+            </form>
+            <div id="alerts"></div>
+        </div>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        checkReferralCode();
-        startCountdown();
-        loadRanking();
-        checkExistingUser();
-    });
+        <!-- Sección de éxito -->
+        <div class="success-section" id="success-section">
+            <h2 class="success-title">🎉 ¡Estás participando por S/100!</h2>
+            <p>Comparte tu enlace para ganar más oportunidades:</p>
+            <div class="affiliate-link" id="affiliate-link"></div>
+            <button class="copy-btn" onclick="copyLink()">📋 Copiar enlace</button>
+            <button class="copy-btn" onclick="shareWhatsApp()">📱 Compartir en WhatsApp</button>
+        </div>
 
-    function checkReferralCode() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const ref = urlParams.get('ref');
-        if (ref) referredBy = ref;
-    }
-
-    function checkExistingUser() {
-        const savedUser = localStorage.getItem('userAffiliateId');
-        if (savedUser) {
-            userAffiliateId = savedUser;
-            showSuccessSection(BASE_URL + '?ref=' + userAffiliateId);
-        }
-    }
-
-    function startCountdown() {
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = CAMPAIGN_END.getTime() - now;
-            if (distance < 0) {
-                document.getElementById('countdown').innerHTML = '<div style="color: #ff6b6b; font-size: 1.5rem;">🚨 ¡La campaña terminó!</div>';
-                return;
-            }
-            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = d.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = h.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = m.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = s.toString().padStart(2, '0');
-        }
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    }
-
-    document.getElementById('userForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const submitBtn = document.getElementById('submitBtn');
-        const alertsDiv = document.getElementById('alerts');
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = '⏳ Registrando...';
-        alertsDiv.innerHTML = '';
-
-        try {
-            const formData = {
-                nombre: document.getElementById('nombre').value.trim(),
-                correo: document.getElementById('correo').value.trim(),
-                yape: document.getElementById('yape').value.trim(),
-                referidoPor: referredBy || '',
-                timestamp: new Date().toISOString()
-            };
-            const userId = generateUserId(formData.nombre);
-            formData.userId = userId;
-
-            const res = await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-
-            const result = await res.json();
-            if (result.success) {
-                userAffiliateId = userId;
-                localStorage.setItem('userAffiliateId', userId);
-                showSuccessSection(BASE_URL + '?ref=' + userId);
-                loadRanking();
-                showAlert('¡Registro exitoso! Comparte tu enlace.', 'success');
-            } else {
-                throw new Error(result.message || 'Error desconocido');
-            }
-        } catch (err) {
-            console.error(err);
-            showAlert('Error al registrar. Intenta de nuevo.', 'error');
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = '🚀 Registrarme y obtener mi enlace';
-        }
-    });
-
-    function generateUserId(nombre) {
-        const clean = nombre.toLowerCase().replace(/[^a-z0-9]/g, '');
-        const stamp = Date.now().toString().slice(-6);
-        return clean.substring(0, 8) + stamp;
-    }
-
-    function showSuccessSection(link) {
-        document.getElementById('registration-form').style.display = 'none';
-        document.getElementById('success-section').style.display = 'block';
-        document.getElementById('affiliate-link').textContent = link;
-    }
-
-    function copyLink() {
-        const link = document.getElementById('affiliate-link').textContent;
-        navigator.clipboard.writeText(link).then(() => showAlert('Enlace copiado', 'success'));
-    }
-
-    function shareWhatsApp() {
-        const link = document.getElementById('affiliate-link').textContent;
-        const msg = `🎯 ¡Participa y gana S/100! Regístrate con mi enlace: ${link}`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    async function loadRanking() {
-        try {
-            const res = await fetch(GOOGLE_SCRIPT_URL + '?action=getRanking');
-            const data = await res.json();
-            const tbody = document.getElementById('ranking-body');
-
-            if (data.success && data.ranking.length > 0) {
-                tbody.innerHTML = data.ranking.map((user, i) => `
+        <!-- Ranking -->
+        <div class="ranking-section">
+            <h2>🏆 Ranking de Afiliados</h2>
+            <table class="ranking-table">
+                <thead>
                     <tr>
-                        <td class="position">#${i + 1}</td>
-                        <td>${user.nombre}</td>
-                        <td>${user.referidos}</td>
+                        <th>Posición</th>
+                        <th>Nombre</th>
+                        <th>Referidos</th>
                     </tr>
-                `).join('');
-            } else {
-                tbody.innerHTML = '<tr><td colspan="3" class="loading">Sin participantes</td></tr>';
+                </thead>
+                <tbody id="ranking-body">
+                    <tr>
+                        <td colspan="3" class="loading">Cargando ranking...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Configuración
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjLwL9IoRgdlXXfgf7aWHhBeCDRqeooxGMgdubmYRd5zW0F4FIL9iCHXTQGYuHRuR3/exec'; // Reemplaza con tu URL
+        const CAMPAIGN_END = new Date('2025-07-06T20:00:00-05:00'); // 6 de julio 8:00 PM Perú
+        const BASE_URL = window.location.origin + window.location.pathname;
+        
+        // Variables globales
+        let userAffiliateId = null;
+        let referredBy = null;
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            checkReferralCode();
+            startCountdown();
+            loadRanking();
+            checkExistingUser();
+        });
+
+        // Verificar código de referido en URL
+        function checkReferralCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const ref = urlParams.get('ref');
+            if (ref) {
+                referredBy = ref;
+                console.log('Referido por:', ref);
             }
-        } catch (e) {
-            document.getElementById('ranking-body').innerHTML = '<tr><td colspan="3">Error al cargar ranking</td></tr>';
         }
-    }
 
-    setInterval(loadRanking, 30000);
+        // Verificar si el usuario ya se registró
+        function checkExistingUser() {
+            const savedUser = localStorage.getItem('userAffiliateId');
+            if (savedUser) {
+                userAffiliateId = savedUser;
+                showSuccessSection(BASE_URL + '?ref=' + userAffiliateId);
+            }
+        }
 
-    function showAlert(message, type) {
-        const alerts = document.getElementById('alerts');
-        alerts.innerHTML = `<div class="alert ${type === 'success' ? 'alert-success' : 'alert-error'}">${message}</div>`;
-        setTimeout(() => alerts.innerHTML = '', 5000);
-    }
-</script>
+        // Temporizador regresivo
+        function startCountdown() {
+            function updateTimer() {
+                const now = new Date().getTime();
+                const distance = CAMPAIGN_END.getTime() - now;
+
+                if (distance < 0) {
+                    document.getElementById('countdown').innerHTML = 
+                        '<div style="color: #ff6b6b; font-size: 1.5rem;">🚨 ¡La campaña terminó! Gracias por participar.</div>';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // Manejo del formulario
+        document.getElementById('userForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const alertsDiv = document.getElementById('alerts');
+            
+            // Deshabilitar botón
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Registrando...';
+            alertsDiv.innerHTML = '';
+
+            try {
+                const formData = {
+                    nombre: document.getElementById('nombre').value.trim(),
+                    correo: document.getElementById('correo').value.trim(),
+                    yape: document.getElementById('yape').value.trim(),
+                    referidoPor: referredBy || '',
+                    timestamp: new Date().toISOString()
+                };
+
+                // Generar ID único del usuario
+                const userId = generateUserId(formData.nombre);
+                formData.userId = userId;
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en el servidor');
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    userAffiliateId = userId;
+                    localStorage.setItem('userAffiliateId', userId);
+                    
+                    const affiliateLink = BASE_URL + '?ref=' + userId;
+                    showSuccessSection(affiliateLink);
+                    loadRanking(); // Actualizar ranking
+                    
+                    showAlert('¡Registro exitoso! Tu enlace de afiliado ha sido generado.', 'success');
+                } else {
+                    throw new Error(result.message || 'Error desconocido');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al registrar. Por favor, intenta nuevamente.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 Registrarme y obtener mi enlace';
+            }
+        });
+
+        // Generar ID único del usuario
+        function generateUserId(nombre) {
+            const cleanName = nombre.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const timestamp = Date.now().toString().slice(-6);
+            return cleanName.substring(0, 8) + timestamp;
+        }
+
+        // Mostrar sección de éxito
+        function showSuccessSection(link) {
+            document.getElementById('registration-form').style.display = 'none';
+            document.getElementById('success-section').style.display = 'block';
+            document.getElementById('affiliate-link').textContent = link;
+        }
+
+        // Copiar enlace
+        function copyLink() {
+            const linkElement = document.getElementById('affiliate-link');
+            const link = linkElement.textContent;
+            
+            navigator.clipboard.writeText(link).then(() => {
+                showAlert('¡Enlace copiado al portapapeles!', 'success');
+            }).catch(() => {
+                // Fallback para navegadores antiguos
+                const textArea = document.createElement('textarea');
+                textArea.value = link;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showAlert('¡Enlace copiado!', 'success');
+            });
+        }
+
+        // Compartir en WhatsApp
+        function shareWhatsApp() {
+            const link = document.getElementById('affiliate-link').textContent;
+            const message = `🎯 ¡Participa en nuestra campaña y gana S/100! Regístrate con mi enlace: ${link}`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Cargar ranking
+        async function loadRanking() {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL + '?action=getRanking');
+                const data = await response.json();
+                
+                const tbody = document.getElementById('ranking-body');
+                
+                if (data.success && data.ranking.length > 0) {
+                    tbody.innerHTML = data.ranking.map((user, index) => `
+                        <tr>
+                            <td class="position">#${index + 1}</td>
+                            <td>${user.nombre}</td>
+                            <td>${user.referidos}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="3" class="loading">Aún no hay participantes en el ranking</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error cargando ranking:', error);
+                document.getElementById('ranking-body').innerHTML = 
+                    '<tr><td colspan="3" class="loading">Error al cargar el ranking</td></tr>';
+            }
+        }
+
+        // Mostrar alerta
+        function showAlert(message, type) {
+            const alertsDiv = document.getElementById('alerts');
+            const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
+            
+            alertsDiv.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
+            
+            setTimeout(() => {
+                alertsDiv.innerHTML = '';
+            }, 5000);
+        }
+
+        // Actualizar ranking cada 30 segundos
+        setInterval(loadRanking, 30000);
+    </script>
 </body>
 </html>
-
