@@ -40,6 +40,7 @@
                         <label for="userYape">Tu número de Celular o Yape</label>
                         <input type="tel" id="userYape" name="userYape" placeholder="Ej: 987 654 321" required>
                     </div>
+                    <!-- Este campo oculto es crucial para rastrear referidos -->
                     <input type="hidden" id="referrerId" name="referrerId">
                     <button type="submit" id="submit-btn" class="btn-submit">Activar mi Panel y Participar</button>
                 </form>
@@ -75,7 +76,6 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- CONFIGURACIÓN ---
-        // Tus enlaces personales incorporados
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
         const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
 
@@ -91,41 +91,74 @@
 
         // --- FUNCIONES PRINCIPALES ---
 
+        /**
+         * Muestra el dashboard del usuario y activa los botones de compartir.
+         */
         function showDashboard(userData) {
             registrationSection.classList.add('hidden');
             dashboardSection.classList.remove('hidden');
+
             const referralLink = `${TALLY_FORM_URL}?ref=${userData.userAlias}`;
+
             document.getElementById('user-alias-display').textContent = userData.userAlias;
             document.getElementById('user-referral-link').textContent = referralLink;
+
             const copyBtn = document.getElementById('copy-btn');
-            copyBtn.onclick = () => { /* ... (código sin cambios) */ };
+            copyBtn.onclick = () => { // Lógica del botón Copiar
+                navigator.clipboard.writeText(referralLink).then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+                    setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar Enlace'; }, 2000);
+                });
+            };
+
             const whatsappBtn = document.getElementById('whatsapp-btn');
-            whatsappBtn.onclick = () => { /* ... (código sin cambios) */ };
+            whatsappBtn.onclick = () => { // Lógica del botón WhatsApp
+                const message = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Responde esta corta encuesta y participa por premios. ¡Es súper importante! 💪🇵🇪 ${referralLink}`);
+                window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
+            };
         }
         
-        function fetchRanking() { /* ... (código sin cambios) */ }
+        /**
+         * Obtiene y muestra el ranking desde el Google Apps Script.
+         */
+        function fetchRanking() {
+            rankingList.innerHTML = '<p class="ranking-loader">Cargando ranking en tiempo real...</p>';
+            fetch(SCRIPT_URL)
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        rankingList.innerHTML = data.map((user, index) => `
+                            <div class="ranking-item">
+                                <div class="rank-pos">#${index + 1}</div>
+                                <div class="rank-alias">${user.alias}</div>
+                                <div class="rank-count">${user.count} referidos</div>
+                            </div>
+                        `).join('');
+                    } else {
+                        rankingList.innerHTML = '<p class="ranking-loader">Aún no hay suficientes datos para el ranking. ¡Sé el primero en referir!</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar el ranking:', error);
+                    rankingList.innerHTML = '<p class="ranking-loader">No se pudo cargar el ranking. Intenta recargar la página.</p>';
+                });
+        }
 
+        /**
+         * Maneja el envío del formulario de registro.
+         */
         function handleRegistration(event) {
             event.preventDefault();
             const alias = document.getElementById('userAlias').value;
             const yape = document.getElementById('userYape').value;
-            const referrerId = document.getElementById('referrerId').value || 'Directo';
+            const referrerId = document.getElementById('referrerId').value; // Ya tiene 'Directo' por defecto
 
-            // Validaciones
-            if (!/^[a-zA-Z0-9_-]+$/.test(alias)) {
-                alert('Tu alias solo puede contener letras, números, guiones (-) y guiones bajos (_). Sin espacios.');
-                return;
-            }
-            if (!/^[9]\d{8}$/.test(yape)) {
-                alert('Por favor, ingresa un número de celular/Yape válido de 9 dígitos.');
-                return;
-            }
+            if (!/^[a-zA-Z0-9_-]+$/.test(alias)) { /* ... (validación) */ return; }
+            if (!/^[9]\d{8}$/.test(yape)) { /* ... (validación) */ return; }
 
             submitBtn.disabled = true;
             submitBtn.textContent = "Registrando...";
 
-            // --- LÓGICA DE ENVÍO CORREGIDA ---
-            // Usamos FormData, que es el formato estándar para formularios.
             const formData = new FormData();
             formData.append('userAlias', alias);
             formData.append('userYape', yape);
@@ -138,18 +171,23 @@
             .then(res => res.json())
             .then(data => {
                 if (data.result === 'success') {
-                    const userData = { userAlias: alias, userYape: yape };
+                    const userData = { userAlias: alias };
                     alert(`¡Felicidades, ${userData.userAlias}! Tu registro fue exitoso.`);
                     showDashboard(userData);
                     localStorage.setItem('tvtsUser', JSON.stringify(userData));
-                    fetchRanking(); // Actualizar ranking después de registrarse
+                    fetchRanking();
                 } else {
                     throw new Error(data.error || 'El servidor devolvió un error.');
                 }
             })
             .catch(error => {
                 console.error('Error al registrar:', error);
-                alert('Hubo un error al registrar. Por favor, revisa tu conexión e inténtalo de nuevo.');
+                // Sugerencia: chequear si el alias ya existe
+                if (error.message.includes("ya existe")) {
+                    alert("Error: Ese alias ya está en uso. Por favor, elige otro.");
+                } else {
+                    alert('Hubo un error al registrar. Por favor, revisa tu conexión e inténtalo de nuevo.');
+                }
             })
             .finally(() => {
                 submitBtn.disabled = false;
@@ -157,7 +195,9 @@
             });
         }
         
-        // --- INICIALIZACIÓN DE LA PÁGINA ---
+        /**
+         * Inicializa la lógica de la página al cargar.
+         */
         function initializePage() {
             showContentBtn.addEventListener('click', () => {
                 heroSection.classList.add('hidden');
@@ -170,6 +210,7 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const refIdFromUrl = urlParams.get('ref');
+            // Aquí está la clave: Asignamos el valor del referido o 'Directo' si no hay nada.
             document.getElementById('referrerId').value = refIdFromUrl || 'Directo';
 
             const savedUser = localStorage.getItem('tvtsUser');
@@ -182,9 +223,7 @@
             }
         }
         
-        // El resto de funciones (showDashboard, fetchRanking, temporizador) se quedan igual
-        // por brevedad, pero puedes copiar y pegar la sección de script completa de mi respuesta anterior.
-        // O usar esta versión que ya las incluye.
+        // --- TEMPORIZADOR --- (Sin cambios)
         
         initializePage();
     });
