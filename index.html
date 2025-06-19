@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- ... (El <head> y el <style> se mantienen exactamente igual que en la versión anterior) ... -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Voz Tu Salud Perú - Convierte tu voz en un premio</title>
     
+    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (para iconos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* --- ESTILOS VISUALES --- */
         :root {
             --color-primario: #007BFF;
             --color-secundario: #00C6A7;
@@ -29,46 +32,57 @@
             color: var(--color-texto-principal);
             margin: 0;
             line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         .container { max-width: 800px; margin: 0 auto; padding: 20px; }
         .hidden { display: none !important; }
 
-        .hero-section { text-align: center; padding: 80px 20px 60px; }
+        /* --- SECCIÓN HERO (Primer Impacto) --- */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+        }
         .hero-section .icon-thanks {
             font-size: 4rem;
             background: linear-gradient(45deg, var(--color-secundario), var(--color-primario));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
         }
         .hero-section h1 { font-weight: 800; font-size: clamp(2.2rem, 6vw, 3.5rem); line-height: 1.2; margin: 0 0 15px 0; }
         .hero-section .subtitle { font-size: 1.15rem; color: var(--color-texto-secundario); max-width: 650px; margin: 0 auto 40px auto; }
         .cta-button {
-            font-size: 1.2rem; font-weight: 700; padding: 18px 35px; border-radius: 50px; border: none; background: var(--color-primario); color: white; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-size: 1.2rem; font-weight: 700; padding: 18px 35px; border-radius: 50px; border: none; background: var(--color-primario); color: white; cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
         }
         .cta-button:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4); }
 
+        /* --- CONTENIDO PRINCIPAL --- */
         .main-content { opacity: 0; transition: opacity 0.6s ease-in-out; }
         .main-content.visible { opacity: 1; }
         .card { background-color: var(--color-tarjeta); border-radius: 16px; padding: 30px 40px; margin-bottom: 30px; box-shadow: var(--sombra-tarjeta); border: 1px solid var(--color-borde); }
         h2 { font-size: 1.6rem; text-align: center; margin: 0 0 25px 0; display: flex; align-items: center; justify-content: center; gap: 12px; }
         h2 .icon { color: var(--color-primario); }
         
+        /* FORMULARIO */
         #registration-section p { text-align: center; margin-top: -15px; color: var(--color-texto-secundario); }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 10px; font-size: 1.1rem; }
-        .form-group input {
-            width: 100%; padding: 16px; border: 2px solid var(--color-borde); border-radius: 10px; font-size: 1.2rem; font-family: 'Poppins', sans-serif; box-sizing: border-box; transition: border-color 0.3s, box-shadow 0.3s;
-        }
+        .form-group input { width: 100%; padding: 16px; border: 2px solid var(--color-borde); border-radius: 10px; font-size: 1.2rem; font-family: 'Poppins', sans-serif; box-sizing: border-box; transition: border-color 0.3s, box-shadow 0.3s; }
         .form-group input:focus { outline: none; border-color: var(--color-primario); box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15); }
         .form-group .validation-note { font-size: 0.85rem; color: var(--color-texto-secundario); margin-top: 5px; }
-        
-        .btn-submit {
-            width: 100%; padding: 16px; margin-top: 15px; background: var(--color-secundario); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: background-color 0.3s, transform 0.2s;
-        }
+        .btn-submit { width: 100%; padding: 16px; margin-top: 15px; background: var(--color-secundario); color: white; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: 700; cursor: pointer; transition: background-color 0.3s, transform 0.2s; }
         .btn-submit:hover { background-color: #009e86; transform: translateY(-2px); }
         .btn-submit:disabled { background-color: #9abcc5; cursor: not-allowed; }
 
+        /* DASHBOARD */
         .dashboard-intro { text-align: center; font-size: 1.1rem; color: var(--color-texto-secundario); margin-top: -15px; margin-bottom: 30px; }
         .alias-container { text-align: center; background: #e7f3ff; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
         .alias-container .label { font-size: 0.9rem; color: var(--color-primario); }
@@ -79,7 +93,8 @@
         #copy-btn { background-color: var(--color-primario); color: white; }
         #whatsapp-btn { background-color: #25D366; color: white; }
         
-        .ranking-list { list-style: none; padding: 0; min-height: 100px; /* Espacio para el loader */ }
+        /* RANKING */
+        .ranking-list { list-style: none; padding: 0; min-height: 100px; }
         .ranking-loader { text-align: center; color: var(--color-texto-secundario); }
         .ranking-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f1f1f1; }
         .ranking-item:last-child { border-bottom: none; }
@@ -87,17 +102,19 @@
         .rank-alias { font-weight: 600; flex-grow: 1; }
         .rank-count { font-weight: 700; color: var(--color-secundario); }
         
+        /* TEMPORIZADOR */
         #timer { display: flex; justify-content: space-around; text-align: center; }
         .timer-value { font-size: 2.5rem; font-weight: 700; color: var(--color-primario); }
         .timer-label { font-size: 0.9rem; color: var(--color-texto-secundario); }
         
+        /* FOOTER */
         .footer { text-align: center; padding: 40px 20px; color: var(--color-texto-secundario); font-size: 0.9rem; margin-top: 20px; border-top: 1px solid var(--color-borde); }
         .footer a { color: var(--color-primario); font-weight: 600; text-decoration: none; }
     </style>
 </head>
 
 <body>
-    <!-- ... (El HTML del <body> se mantiene exactamente igual) ... -->
+    <!-- SECCIÓN 1: BIENVENIDA Y PERSUASIÓN -->
     <div id="hero-section" class="hero-section">
         <i class="fas fa-check-circle icon-thanks"></i>
         <h1>¡Tu voz ya fue escuchada!</h1>
@@ -105,6 +122,7 @@
         <button id="show-main-content-btn" class="cta-button">¡Claro! Quiero participar por los premios</button>
     </div>
 
+    <!-- SECCIÓN 2: CONTENIDO PRINCIPAL (Formulario y Dashboard) -->
     <main id="main-content" class="main-content hidden">
         <div class="container">
             
@@ -115,7 +133,7 @@
                     <div class="form-group">
                         <label for="userAlias">Crea tu Alias (para el ranking)</label>
                         <input type="text" id="userAlias" name="userAlias" placeholder="Ej: LiderSalud24" required>
-                        <div class="validation-note">Solo letras, números y guiones. Sin espacios.</div>
+                        <div class="validation-note">Solo letras, números, guiones y guiones bajos. Sin espacios.</div>
                     </div>
                     <div class="form-group">
                         <label for="userYape">Tu número de Celular o Yape</label>
@@ -154,16 +172,17 @@
             </div>
         </div>
         <footer class="footer">
-             Un proyecto de <a href="#" target="_blank">Clinic IOS</a> para la campaña nacional <br><strong>Tu Voz Tu Salud Perú</strong>
+             Un proyecto de <a href="https://clinic-ios.com" target="_blank">Clinic IOS</a> para la campaña nacional <br><strong>Tu Voz Tu Salud Perú</strong>
         </footer>
     </main>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- Constante para la URL del script ---
+        // --- CONFIGURACIÓN ---
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
+        const TALLY_FORM_URL = 'https://tally.so/r/w5QEpk'; // ¡IMPORTANTE! Reemplaza con tu URL real de Tally
 
-        // --- Selectores y Lógica de Visualización (sin cambios) ---
+        // --- SELECTORES DE ELEMENTOS DEL DOM ---
         const heroSection = document.getElementById('hero-section');
         const mainContent = document.getElementById('main-content');
         const showContentBtn = document.getElementById('show-main-content-btn');
@@ -172,67 +191,43 @@
         const dashboardSection = document.getElementById('dashboard-section');
         const referrerIdInput = document.getElementById('referrerId');
         const submitBtn = document.getElementById('submit-btn');
+        const rankingList = document.getElementById('ranking-list');
 
-        showContentBtn.addEventListener('click', () => {
-            heroSection.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            setTimeout(() => mainContent.classList.add('visible'), 50);
-            fetchRanking(); // Cargar el ranking cuando se muestra el contenido principal
-        });
+        // --- FUNCIONES PRINCIPALES ---
 
-        // --- Lógica de Registro (POST a Google Apps Script) ---
-        referralForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            // ... (validaciones sin cambios)
-            const alias = document.getElementById('userAlias').value;
-            const yape = document.getElementById('userYape').value;
-            if (!/^[a-zA-Z0-9_-]+$/.test(alias) || !/^[9]\d{8}$/.test(yape)) { /* ... */ return; }
+        /**
+         * Muestra el dashboard del usuario con sus datos y enlace de referido.
+         */
+        function showDashboard(userData) {
+            registrationSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
 
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Registrando...";
-            
-            const userData = { userAlias: alias, userYape: yape, referrerId: referrerIdInput.value || 'Directo' };
+            const referralLink = `${TALLY_FORM_URL}?ref=${userData.userAlias}`;
 
-            // Usamos FormData para que sea compatible con el script
-            const formData = new FormData();
-            for(const key in userData) {
-                formData.append(key, userData[key]);
-            }
-            
-            // Re-convertimos a un objeto simple para el JSON.stringify
-            const plainObject = Object.fromEntries(formData.entries());
+            document.getElementById('user-alias-display').textContent = userData.userAlias;
+            document.getElementById('user-referral-link').textContent = referralLink;
 
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify(plainObject) // Enviamos como JSON
-            })
-            .then(res => res.json()) // Esperamos una respuesta JSON del script
-            .then(data => {
-                if(data.result === 'success') {
-                    alert(`¡Felicidades, ${userData.userAlias}! Tu registro fue exitoso.`);
-                    showDashboard(userData);
-                    localStorage.setItem('tvtsUser', JSON.stringify(userData));
-                    fetchRanking(); // Actualizar ranking después de registrarse
-                } else {
-                    throw new Error(data.error || 'Error desconocido del servidor.');
-                }
-            })
-            .catch(error => {
-                console.error('Error al registrar:', error);
-                alert('Hubo un error al registrar. Por favor, inténtalo de nuevo.');
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Activar mi Panel y Participar";
-            });
-        });
+            const copyBtn = document.getElementById('copy-btn');
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(referralLink).then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
+                    setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar Enlace'; }, 2000);
+                });
+            };
+
+            const whatsappBtn = document.getElementById('whatsapp-btn');
+            whatsappBtn.onclick = () => {
+                const message = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Responde esta corta encuesta y participa por premios. ¡Es súper importante! 💪🇵🇪 ${referralLink}`);
+                window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
+            };
+        }
         
-        // --- NUEVA FUNCIÓN: Cargar el Ranking (GET a Google Apps Script) ---
+        /**
+         * Obtiene y muestra el ranking desde el Google Apps Script.
+         */
         function fetchRanking() {
-            const rankingList = document.getElementById('ranking-list');
             rankingList.innerHTML = '<p class="ranking-loader">Cargando ranking en tiempo real...</p>';
-
-            fetch(SCRIPT_URL) // Por defecto, fetch hace una petición GET
+            fetch(SCRIPT_URL)
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data) && data.length > 0) {
@@ -252,56 +247,47 @@
                     rankingList.innerHTML = '<p class="ranking-loader">No se pudo cargar el ranking. Intenta recargar la página.</p>';
                 });
         }
-        
-        // --- Cargar todo al inicio ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const refIdFromUrl = urlParams.get('ref');
-        if (refIdFromUrl) { referrerIdInput.value = refIdFromUrl; }
-        
-        const savedUser = localStorage.getItem('tvtsUser');
-        if (savedUser) {
-            heroSection.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            mainContent.classList.add('visible');
-            showDashboard(JSON.parse(savedUser));
-            fetchRanking();
+
+        /**
+         * Inicializa la lógica de la página al cargar.
+         */
+        function initializePage() {
+            // Asignar evento al botón azul de la página de inicio
+            showContentBtn.addEventListener('click', () => {
+                heroSection.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                setTimeout(() => mainContent.classList.add('visible'), 50);
+                fetchRanking();
+            });
+
+            // Asignar evento al formulario de registro
+            referralForm.addEventListener('submit', handleRegistration);
+
+            // Revisar si el usuario ya está registrado o viene de un referido
+            const urlParams = new URLSearchParams(window.location.search);
+            const refIdFromUrl = urlParams.get('ref');
+            if (refIdFromUrl) { referrerIdInput.value = refIdFromUrl; }
+
+            const savedUser = localStorage.getItem('tvtsUser');
+            if (savedUser) {
+                heroSection.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                mainContent.classList.add('visible');
+                showDashboard(JSON.parse(savedUser));
+                fetchRanking();
+            }
         }
 
-        function showDashboard(userData) { /* ... (sin cambios) */ }
-        // ... (código del temporizador sin cambios)
-    });
-        <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Constante para la URL del script ---
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
-
-        // --- Selectores y Lógica de Visualización ---
-        const heroSection = document.getElementById('hero-section');
-        const mainContent = document.getElementById('main-content');
-        const showContentBtn = document.getElementById('show-main-content-btn');
-        const referralForm = document.getElementById('referralForm');
-        const registrationSection = document.getElementById('registration-section');
-        const dashboardSection = document.getElementById('dashboard-section');
-        const referrerIdInput = document.getElementById('referrerId');
-        const submitBtn = document.getElementById('submit-btn');
-
-        showContentBtn.addEventListener('click', () => {
-            heroSection.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            setTimeout(() => mainContent.classList.add('visible'), 50);
-            fetchRanking();
-        });
-
-        // --- Lógica de Registro (POST a Google Apps Script) ---
-        referralForm.addEventListener('submit', function(event) {
+        /**
+         * Maneja el envío del formulario de registro.
+         */
+        function handleRegistration(event) {
             event.preventDefault();
             
-            const userAliasInput = document.getElementById('userAlias');
-            const userYapeInput = document.getElementById('userYape');
-            const alias = userAliasInput.value;
-            const yape = userYapeInput.value;
+            const alias = document.getElementById('userAlias').value;
+            const yape = document.getElementById('userYape').value;
 
-            // VALIDACIONES
+            // Validaciones
             if (!/^[a-zA-Z0-9_-]+$/.test(alias)) {
                 alert('Tu alias solo puede contener letras, números, guiones (-) y guiones bajos (_). Sin espacios.');
                 return;
@@ -316,26 +302,22 @@
 
             const userData = { userAlias: alias, userYape: yape, referrerId: referrerIdInput.value || 'Directo' };
             
-            // --- 🚀 FETCH CORREGIDO ---
-            // Creamos un objeto de FormData, que es lo que el script espera
-            const formData = new FormData();
-            formData.append('postData', JSON.stringify({ contents: JSON.stringify(userData) }));
-            // El `fetch` ahora se hace sin 'no-cors' y espera una respuesta JSON válida
+            // Envío de datos al script
             fetch(SCRIPT_URL, {
                 method: 'POST',
-                body: formData
+                body: JSON.stringify(userData),
+                headers: { 'Content-Type': 'application/json' },
             })
-            .then(res => {
-                // Google Scripts a veces envuelve la respuesta.
-                // Lo importante es que si no hay error de red, asumimos éxito.
-                // La respuesta real del script es difícil de leer por las redirecciones de Google.
-                // Así que, si la petición se completó, seguimos adelante.
-                console.log('Petición completada. Asumiendo éxito.');
-                
-                alert(`¡Felicidades, ${userData.userAlias}! Tu registro fue exitoso.`);
-                showDashboard(userData);
-                localStorage.setItem('tvtsUser', JSON.stringify(userData));
-                fetchRanking(); // Actualizar ranking después de registrarse
+            .then(res => res.json())
+            .then(data => {
+                if(data.result === 'success') {
+                    alert(`¡Felicidades, ${userData.userAlias}! Tu registro fue exitoso.`);
+                    showDashboard(userData);
+                    localStorage.setItem('tvtsUser', JSON.stringify(userData));
+                    fetchRanking();
+                } else {
+                    throw new Error(data.error || 'El servidor devolvió un error.');
+                }
             })
             .catch(error => {
                 console.error('Error al registrar:', error);
@@ -345,39 +327,22 @@
                 submitBtn.disabled = false;
                 submitBtn.textContent = "Activar mi Panel y Participar";
             });
-        });
-
-        // --- Función para mostrar el dashboard ---
-        function showDashboard(userData) {
-            registrationSection.classList.add('hidden');
-            dashboardSection.classList.remove('hidden');
-
-            const baseSurveyUrl = "https://tally.so/r/w5QEpk"; // ¡Reemplaza con tu URL real de Tally!
-            const referralLink = `${baseSurveyUrl}?ref=${userData.userAlias}`;
-
-            document.getElementById('user-alias-display').textContent = userData.userAlias;
-            document.getElementById('user-referral-link').textContent = referralLink;
-
-            document.getElementById('copy-btn').addEventListener('click', () => {
-                navigator.clipboard.writeText(referralLink).then(() => {
-                    const btn = document.getElementById('copy-btn');
-                    btn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!';
-                    setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Enlace'; }, 2000);
-                });
-            });
-
-            document.getElementById('whatsapp-btn').addEventListener('click', () => {
-                const message = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Responde esta corta encuesta y participa por premios. ¡Es súper importante! 💪🇵🇪 ${referralLink}`);
-                window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
-            });
         }
         
-        // --- Cargar Ranking y datos iniciales ---
-        function fetchRanking() { /* ... (sin cambios) */ }
-        
-        // El resto del script (fetchRanking, carga inicial, temporizador) se mantiene igual
-        // ...
-        // (Pega aquí el resto de tu script sin modificarlo)
+        // --- TEMPORIZADOR ---
+        const countdownDate = new Date("July 28, 2024 23:59:59").getTime();
+        const timerContainer = document.getElementById('timer');
+        setInterval(() => {
+            const distance = countdownDate - new Date().getTime();
+            if (distance < 0) { timerContainer.innerHTML = "<h3>¡Campaña finalizada!</h3>"; return; }
+            const d = Math.floor(distance / (1000*60*60*24));
+            const h = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+            const m = Math.floor((distance % (1000*60*60)) / (1000*60));
+            timerContainer.innerHTML = `<div class="timer-box"><div class="timer-value">${String(d).padStart(2,'0')}</div><div class="timer-label">Días</div></div><div class="timer-box"><div class="timer-value">${String(h).padStart(2,'0')}</div><div class="timer-label">Horas</div></div><div class="timer-box"><div class="timer-value">${String(m).padStart(2,'0')}</div><div class="timer-label">Minutos</div></div>`;
+        }, 60000); // Actualiza cada minuto para ahorrar recursos
+
+        // --- INICIAR LA PÁGINA ---
+        initializePage();
     });
     </script>
 </body>
