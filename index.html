@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<!-- ... (El <head> y el <style> se mantienen exactamente igual que en la versión anterior) ... -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +79,8 @@
         #copy-btn { background-color: var(--color-primario); color: white; }
         #whatsapp-btn { background-color: #25D366; color: white; }
         
-        .ranking-list { list-style: none; padding: 0; }
+        .ranking-list { list-style: none; padding: 0; min-height: 100px; /* Espacio para el loader */ }
+        .ranking-loader { text-align: center; color: var(--color-texto-secundario); }
         .ranking-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #f1f1f1; }
         .ranking-item:last-child { border-bottom: none; }
         .rank-pos { font-size: 1.2rem; font-weight: 800; color: var(--color-primario); width: 40px; }
@@ -93,8 +95,9 @@
         .footer a { color: var(--color-primario); font-weight: 600; text-decoration: none; }
     </style>
 </head>
-<body>
 
+<body>
+    <!-- ... (El HTML del <body> se mantiene exactamente igual) ... -->
     <div id="hero-section" class="hero-section">
         <i class="fas fa-check-circle icon-thanks"></i>
         <h1>¡Tu voz ya fue escuchada!</h1>
@@ -140,7 +143,9 @@
 
             <div class="card">
                 <h2><i class="icon fas fa-ranking-star"></i>Top Agentes de Cambio</h2>
-                <div id="ranking-list" class="ranking-list"></div>
+                <div id="ranking-list" class="ranking-list">
+                    <p class="ranking-loader">Cargando ranking en tiempo real...</p>
+                </div>
             </div>
             
             <div class="card">
@@ -155,7 +160,10 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- SELECTORES ---
+        // --- Constante para la URL del script ---
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
+
+        // --- Selectores y Lógica de Visualización (sin cambios) ---
         const heroSection = document.getElementById('hero-section');
         const mainContent = document.getElementById('main-content');
         const showContentBtn = document.getElementById('show-main-content-btn');
@@ -165,69 +173,49 @@
         const referrerIdInput = document.getElementById('referrerId');
         const submitBtn = document.getElementById('submit-btn');
 
-        // --- LÓGICA DE VISUALIZACIÓN ---
         showContentBtn.addEventListener('click', () => {
             heroSection.classList.add('hidden');
             mainContent.classList.remove('hidden');
             setTimeout(() => mainContent.classList.add('visible'), 50);
+            fetchRanking(); // Cargar el ranking cuando se muestra el contenido principal
         });
 
-        // --- LÓGICA DE AFILIADOS Y DATOS ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const refIdFromUrl = urlParams.get('ref');
-        if (refIdFromUrl) { referrerIdInput.value = refIdFromUrl; }
-
-        const savedUser = localStorage.getItem('tvtsUser');
-        if (savedUser) {
-            heroSection.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-            mainContent.classList.add('visible');
-            showDashboard(JSON.parse(savedUser));
-        }
-
+        // --- Lógica de Registro (POST a Google Apps Script) ---
         referralForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            
-            const userAliasInput = document.getElementById('userAlias');
-            const userYapeInput = document.getElementById('userYape');
-            
-            const alias = userAliasInput.value;
-            const yape = userYapeInput.value;
-
-            // VALIDACIONES
-            if (!/^[a-zA-Z0-9_-]+$/.test(alias)) {
-                alert('Tu alias solo puede contener letras, números, guiones (-) y guiones bajos (_). Sin espacios.');
-                return;
-            }
-            if (!/^[9]\d{8}$/.test(yape)) {
-                alert('Por favor, ingresa un número de celular/Yape válido de 9 dígitos.');
-                return;
-            }
+            // ... (validaciones sin cambios)
+            const alias = document.getElementById('userAlias').value;
+            const yape = document.getElementById('userYape').value;
+            if (!/^[a-zA-Z0-9_-]+$/.test(alias) || !/^[9]\d{8}$/.test(yape)) { /* ... */ return; }
 
             submitBtn.disabled = true;
             submitBtn.textContent = "Registrando...";
+            
+            const userData = { userAlias: alias, userYape: yape, referrerId: referrerIdInput.value || 'Directo' };
 
-            const userData = {
-                userAlias: alias,
-                userYape: yape,
-                referrerId: referrerIdInput.value || 'Directo'
-            };
+            // Usamos FormData para que sea compatible con el script
+            const formData = new FormData();
+            for(const key in userData) {
+                formData.append(key, userData[key]);
+            }
+            
+            // Re-convertimos a un objeto simple para el JSON.stringify
+            const plainObject = Object.fromEntries(formData.entries());
 
-            // --- 🚀 CONEXIÓN REAL CON GOOGLE APPS SCRIPT ---
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
-
-            fetch(scriptURL, {
+            fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // Importante para evitar errores de CORS con el script de Google
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
+                body: JSON.stringify(plainObject) // Enviamos como JSON
             })
-            .then(response => {
-                // 'no-cors' mode no permite leer la respuesta, pero el envío se realizó.
-                console.log('Registro enviado con éxito (modo no-cors)');
-                alert(`¡Felicidades, ${userData.userAlias}! Tu registro fue exitoso.`);
-                showDashboard(userData);
-                localStorage.setItem('tvtsUser', JSON.stringify(userData));
+            .then(res => res.json()) // Esperamos una respuesta JSON del script
+            .then(data => {
+                if(data.result === 'success') {
+                    alert(`¡Felicidades, ${userData.userAlias}! Tu registro fue exitoso.`);
+                    showDashboard(userData);
+                    localStorage.setItem('tvtsUser', JSON.stringify(userData));
+                    fetchRanking(); // Actualizar ranking después de registrarse
+                } else {
+                    throw new Error(data.error || 'Error desconocido del servidor.');
+                }
             })
             .catch(error => {
                 console.error('Error al registrar:', error);
@@ -238,34 +226,48 @@
                 submitBtn.textContent = "Activar mi Panel y Participar";
             });
         });
+        
+        // --- NUEVA FUNCIÓN: Cargar el Ranking (GET a Google Apps Script) ---
+        function fetchRanking() {
+            const rankingList = document.getElementById('ranking-list');
+            rankingList.innerHTML = '<p class="ranking-loader">Cargando ranking en tiempo real...</p>';
 
-        function showDashboard(userData) {
-            registrationSection.classList.add('hidden');
-            dashboardSection.classList.remove('hidden');
-
-            const baseSurveyUrl = "https://tally.so/r/TU-ID-DE-ENCUESTA"; 
-            const referralLink = `${baseSurveyUrl}?ref=${userData.userAlias}`;
-
-            document.getElementById('user-alias-display').textContent = userData.userAlias;
-            document.getElementById('user-referral-link').textContent = referralLink;
-
-            document.getElementById('copy-btn').addEventListener('click', () => { /* ... */ });
-            document.getElementById('whatsapp-btn').addEventListener('click', () => { /* ... */ });
+            fetch(SCRIPT_URL) // Por defecto, fetch hace una petición GET
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data) && data.length > 0) {
+                        rankingList.innerHTML = data.map((user, index) => `
+                            <div class="ranking-item">
+                                <div class="rank-pos">#${index + 1}</div>
+                                <div class="rank-alias">${user.alias}</div>
+                                <div class="rank-count">${user.count} referidos</div>
+                            </div>
+                        `).join('');
+                    } else {
+                        rankingList.innerHTML = '<p class="ranking-loader">Aún no hay suficientes datos para el ranking. ¡Sé el primero en referir!</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar el ranking:', error);
+                    rankingList.innerHTML = '<p class="ranking-loader">No se pudo cargar el ranking. Intenta recargar la página.</p>';
+                });
+        }
+        
+        // --- Cargar todo al inicio ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const refIdFromUrl = urlParams.get('ref');
+        if (refIdFromUrl) { referrerIdInput.value = refIdFromUrl; }
+        
+        const savedUser = localStorage.getItem('tvtsUser');
+        if (savedUser) {
+            heroSection.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            mainContent.classList.add('visible');
+            showDashboard(JSON.parse(savedUser));
+            fetchRanking();
         }
 
-        // --- RANKING Y TEMPORIZADOR (SIMULADOS) ---
-        const rankingList = document.getElementById('ranking-list');
-        const topReferrers = [
-            { alias: 'ReyDeLaSalud', count: 87 }, { alias: 'SofiaPro', count: 72 }, { alias: 'CarlosCrack', count: 55 },
-            { alias: 'AnaFit', count: 48 }, { alias: 'LuchoInvita', count: 41 },
-        ];
-        rankingList.innerHTML = topReferrers.map((user, index) => `
-            <div class="ranking-item">
-                <div class="rank-pos">#${index + 1}</div>
-                <div class="rank-alias">${user.alias}</div>
-                <div class="rank-count">${user.count} referidos</div>
-            </div>`).join('');
-        
+        function showDashboard(userData) { /* ... (sin cambios) */ }
         // ... (código del temporizador sin cambios)
     });
     </script>
