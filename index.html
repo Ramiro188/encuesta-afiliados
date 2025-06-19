@@ -3,564 +3,572 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎯 Campaña de Referidos - Tu Voz Tu Salud Perú</title>
+    <title>Tu Voz Tu Salud Perú - Únete al Movimiento</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* TU CSS ESTÁ PERFECTO, LO MANTENGO INTACTO */
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* --- 🎨 ESTILOS CSS - FÁCILMENTE EDITABLES --- */
+
+        /* Variables de Color: Cambia estos valores para personalizar el tema */
+        :root {
+            --color-primario: #007BFF; /* Azul vibrante para acción */
+            --color-secundario: #00C6A7; /* Verde menta para salud y tecnología */
+            --color-fondo: #f4f7f6; /* Un gris muy claro, casi blanco */
+            --color-tarjeta: #ffffff;
+            --color-texto-principal: #333333;
+            --color-texto-secundario: #555555;
+            --color-borde: #e0e0e0;
+            --sombra-tarjeta: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
-        
+
+        /* --- Estilos Generales --- */
         body {
-            font-family: 'Orbitron', monospace;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #00ff41;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-fondo);
+            color: var(--color-texto-principal);
+            margin: 0;
+            line-height: 1.6;
         }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 191, 255, 0.1) 0%, transparent 50%);
-            z-index: -1;
-            animation: pulse 4s ease-in-out infinite alternate;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
-        
+
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
         }
-        
+
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--color-texto-principal);
+        }
+
+        /* --- Header --- */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            position: relative;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--color-borde);
         }
-        
-        .header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 900;
-            text-shadow: 0 0 20px #00ff41, 0 0 40px #00ff41;
+        .header .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--color-primario), var(--color-secundario));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
-            animation: glow 2s ease-in-out infinite alternate;
         }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41; }
-            to { text-shadow: 0 0 30px #00ff41, 0 0 50px #00ff41; }
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: var(--color-texto-secundario);
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #00bfff;
-            margin-bottom: 20px;
-        }
-        
-        .timer-container {
-            background: linear-gradient(145deg, rgba(0, 255, 65, 0.1), rgba(0, 191, 255, 0.1));
-            border: 2px solid #00ff41;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 30px 0;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
-        }
-        
-        .timer-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #ff6b6b;
-        }
-        
-        .timer {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .timer-unit {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #00bfff;
-            border-radius: 10px;
-            padding: 15px;
-            min-width: 80px;
-            text-align: center;
-        }
-        
-        .timer-number {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #00ff41;
-            display: block;
-        }
-        
-        .timer-label {
-            font-size: 0.8rem;
-            color: #00bfff;
-            text-transform: uppercase;
-        }
-        
-        .form-section {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #00bfff;
-            border-radius: 15px;
+
+        /* --- Tarjetas (Estilo base para secciones) --- */
+        .card {
+            background-color: var(--color-tarjeta);
+            border-radius: 12px;
             padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 0 30px rgba(0, 191, 255, 0.3);
+            margin-bottom: 25px;
+            box-shadow: var(--sombra-tarjeta);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .form-section h2 {
-            color: #00bfff;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Sección de Premios --- */
+        .premios-banner {
+            background: linear-gradient(45deg, var(--color-primario), var(--color-secundario));
+            color: white;
             text-align: center;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
         }
-        
+        .premios-banner h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* --- Formulario --- */
+        #registro-card h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
-        
         .form-group label {
             display: block;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: #00ff41;
-            font-weight: 700;
+            font-size: 0.9rem;
         }
-        
         .form-group input {
             width: 100%;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00ff41;
+            padding: 12px;
+            border: 1px solid var(--color-borde);
             border-radius: 8px;
-            color: #00ff41;
-            font-family: 'Orbitron', monospace;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box; /* Importante para el padding */
+            transition: border-color 0.3s ease;
         }
-        
         .form-group input:focus {
             outline: none;
-            border-color: #00bfff;
-            box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+            border-color: var(--color-primario);
         }
         
-        .submit-btn {
+        .btn-submit {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(45deg, #00ff41, #00bfff);
-            border: none;
-            border-radius: 10px;
-            color: #000;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 30px rgba(0, 255, 65, 0.7);
-        }
-        
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .success-section {
-            background: linear-gradient(145deg, rgba(0, 255, 65, 0.1), rgba(0, 191, 255, 0.1));
-            border: 2px solid #00ff41;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            text-align: center;
-            display: none;
-            animation: slideIn 0.5s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .success-title {
-            font-size: 2rem;
-            color: #00ff41;
-            margin-bottom: 20px;
-        }
-        
-        .affiliate-link {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00bfff;
-            border-radius: 8px;
             padding: 15px;
-            margin: 20px 0;
-            word-break: break-all;
-            color: #00bfff;
-            font-family: monospace;
-        }
-        
-        .copy-btn {
-            background: #00bfff;
-            color: #000;
+            background-color: var(--color-primario);
+            color: white;
             border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-submit:hover {
+            background-color: #0056b3; /* Un azul más oscuro */
+            transform: scale(1.02);
+        }
+
+        /* --- Dashboard de Afiliado (se muestra post-registro) --- */
+        .dashboard {
+            text-align: center;
+        }
+        .dashboard h2 {
+            margin-top: 0;
+        }
+        .referral-link-container {
+            background-color: var(--color-fondo);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--color-primario);
+            margin: 20px 0;
+            word-wrap: break-word;
+        }
+        #user-referral-link {
+            font-weight: 600;
+            color: var(--color-primario);
+        }
+        .dashboard-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap; /* Para móviles */
+        }
+        .btn-action {
             padding: 12px 25px;
-            border-radius: 6px;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .copy-btn:hover {
-            background: #0099cc;
-            transform: scale(1.05);
-        }
-        
-        .ranking-section {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff6b6b;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
-        }
-        
-        .ranking-section h2 {
-            color: #ff6b6b;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            text-align: center;
-        }
-        
-        .ranking-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .ranking-table th,
-        .ranking-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #333;
-        }
-        
-        .ranking-table th {
-            background: rgba(255, 107, 107, 0.2);
-            color: #ff6b6b;
-            font-weight: 900;
-        }
-        
-        .ranking-table tr:nth-child(even) {
-            background: rgba(0, 255, 65, 0.05);
-        }
-        
-        .ranking-table tr:hover {
-            background: rgba(0, 191, 255, 0.1);
-        }
-        
-        .position {
-            color: #ffff00;
-            font-weight: 900;
-        }
-        
-        .loading {
-            text-align: center;
-            color: #00bfff;
-            font-style: italic;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            .timer { gap: 10px; }
-            .timer-unit { min-width: 60px; padding: 10px; }
-            .timer-number { font-size: 1.5rem; }
-            .form-section, .ranking-section { padding: 20px; }
-        }
-        
-        .alert {
-            padding: 15px;
-            margin: 20px 0;
+            border: none;
             border-radius: 8px;
-            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-grow: 1; /* Para que ocupen el espacio */
+            max-width: 200px;
+        }
+        #copy-btn {
+            background-color: var(--color-secundario);
+            color: white;
+        }
+        #copy-btn:hover {
+            background-color: #009e86;
+        }
+        #whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+        }
+        #whatsapp-btn:hover {
+            background-color: #1EBE57;
+        }
+
+        /* --- Ranking --- */
+        .ranking-list {
+            list-style: none;
+            padding: 0;
+        }
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--color-borde);
+            transition: background-color 0.3s ease;
+        }
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+        .ranking-item:hover {
+            background-color: #f9f9f9;
+        }
+        .rank-position {
+            font-size: 1.5rem;
             font-weight: 700;
+            color: var(--color-primario);
+            margin-right: 20px;
+            width: 40px;
+            text-align: center;
+        }
+        .rank-name {
+            font-weight: 600;
+            flex-grow: 1;
+        }
+        .rank-count {
+            font-weight: 600;
+            color: var(--color-secundario);
+        }
+        .current-user-rank {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(45deg, #f0f7ff, #f0fff8);
+            border-radius: 8px;
+            border-left: 5px solid var(--color-primario);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* --- Cuenta Regresiva --- */
+        .countdown-timer {
+            text-align: center;
+        }
+        .countdown-timer h2 {
+            margin-top: 0;
+        }
+        #timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .timer-box {
+            background-color: var(--color-tarjeta);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            min-width: 80px;
+        }
+        .timer-box span {
+            display: block;
+        }
+        .timer-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primario);
+        }
+        .timer-label {
+            font-size: 0.9rem;
+            color: var(--color-texto-secundario);
+            margin-top: 5px;
         }
         
-        .alert-error {
-            background: rgba(255, 0, 0, 0.1);
-            border: 2px solid #ff0000;
-            color: #ff6b6b;
+        /* --- Clases de utilidad --- */
+        .hidden {
+            display: none;
         }
-        
-        .alert-success {
-            background: rgba(0, 255, 0, 0.1);
-            border: 2px solid #00ff41;
-            color: #00ff41;
+
+        /* --- Responsive para móviles --- */
+        @media (max-width: 768px) {
+            .header .logo {
+                font-size: 2rem;
+            }
+            .card {
+                padding: 20px;
+            }
+            #timer {
+                flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea */
+            }
+            .timer-box {
+                flex-basis: 40%; /* Ocupa casi la mitad del ancho */
+                min-width: 120px;
+                margin-bottom: 10px;
+            }
+            .premios-banner h2 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <!-- He cambiado el título para reflejar el nombre original de la campaña -->
-            <h1>TU VOZ TU SALUD PERÚ</h1>
-            <p class="subtitle">¡Participa y Gana! Comparte tu enlace y multiplica tus oportunidades</p>
-        </header>
 
-        <!-- Temporizador -->
-        <div class="timer-container">
-            <h3 class="timer-title">⏰ Tiempo restante de la campaña</h3>
-            <div class="timer" id="countdown">
-                <div class="timer-unit"><span class="timer-number" id="days">00</span><span class="timer-label">Días</span></div>
-                <div class="timer-unit"><span class="timer-number" id="hours">00</span><span class="timer-label">Horas</span></div>
-                <div class="timer-unit"><span class="timer-number" id="minutes">00</span><span class="timer-label">Minutos</span></div>
-                <div class="timer-unit"><span class="timer-number" id="seconds">00</span><span class="timer-label">Segundos</span></div>
+    <header class="header">
+        <div class="logo">Tu Voz Tu Salud</div>
+        <p class="subtitle">La campaña nacional para transformar el sistema de salud del Perú. Tu participación es el primer paso hacia el cambio.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 🎁 5. Banner de Premios -->
+        <div class="premios-banner card">
+            <h2>¡Participa del sorteo de 2 premios de S/10 y compite por el gran premio de S/100 al que consiga más referidos!</h2>
+        </div>
+
+        <!-- 📋 1. Formulario de Inscripción -->
+        <div id="registro-card" class="card">
+            <h2>Únete al movimiento</h2>
+            <form id="referralForm">
+                <div class="form-group">
+                    <label for="userName">Nombre Completo</label>
+                    <input type="text" id="userName" name="userName" placeholder="Ej: Maria Rojas" required>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Correo Electrónico</label>
+                    <input type="email" id="userEmail" name="userEmail" placeholder="Ej: maria.rojas@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="userYape">Número de Celular o Yape</label>
+                    <input type="tel" id="userYape" name="userYape" placeholder="Ej: 987654321" required>
+                </div>
+                <div class="form-group">
+                    <label for="userId">Tu ID único (Puedes editarlo si quieres)</label>
+                    <input type="text" id="userId" name="userId" required>
+                </div>
+                <div class="form-group">
+                    <label for="referrerId">ID de quien te refirió (Opcional)</label>
+                    <input type="text" id="referrerId" name="referrerId" placeholder="Ej: JUANP123">
+                </div>
+                <button type="submit" class="btn-submit">Registrarme y Generar mi Enlace</button>
+                <div id="form-message" style="margin-top: 15px; text-align: center; color: red;"></div>
+            </form>
+        </div>
+
+        <!-- 🧠 2. Dashboard de Referidos (Oculto inicialmente) -->
+        <div id="dashboard-card" class="card dashboard hidden">
+            <h2>¡Bienvenido/a al cambio, <span id="dashboard-username"></span>!</h2>
+            <p>Este es tu panel de impacto. Compártelo para sumar voces.</p>
+            <p><strong>Tu ID Único:</strong> <span id="user-unique-id" style="font-weight:700; color:var(--color-primario);"></span></p>
+            
+            <p><strong>Tu enlace personal para referir:</strong></p>
+            <div class="referral-link-container">
+                <span id="user-referral-link"></span>
+            </div>
+            
+            <div class="dashboard-actions">
+                <button id="copy-btn" class="btn-action">Copiar Enlace</button>
+                <button id="whatsapp-btn" class="btn-action">Compartir por WhatsApp</button>
             </div>
         </div>
 
-        <!-- Formulario de registro -->
-        <div class="form-section" id="registration-form">
-            <h2>📝 Regístrate para participar</h2>
-            <form id="userForm">
-                <div class="form-group">
-                    <label for="nombre">👤 Nombre o Alias *</label>
-                    <input type="text" id="nombre" name="nombre" required>
+        <!-- 🥇 3. Ranking de Referidos -->
+        <div id="ranking-card" class="card">
+            <h2>🥇 Ranking de Impacto</h2>
+            <ol id="ranking-list" class="ranking-list">
+                <!-- El ranking se generará con JS -->
+            </ol>
+            <div id="current-user-rank" class="current-user-rank hidden">
+                <!-- La posición del usuario actual se mostrará aquí -->
+            </div>
+        </div>
+        
+        <!-- ⏳ 4. Temporizador -->
+        <div id="countdown-card" class="card countdown-timer">
+            <h2>Cierre de la campaña y sorteo</h2>
+            <div id="timer">
+                <div class="timer-box">
+                    <span id="days" class="timer-value">00</span>
+                    <span class="timer-label">Días</span>
                 </div>
-                <div class="form-group">
-                    <label for="correo">📧 Correo electrónico *</label>
-                    <input type="email" id="correo" name="correo" required>
+                <div class="timer-box">
+                    <span id="hours" class="timer-value">00</span>
+                    <span class="timer-label">Horas</span>
                 </div>
-                <div class="form-group">
-                    <label for="yape">💳 Número de Yape (Opcional)</label>
-                    <input type="tel" id="yape" name="yape" placeholder="Ej: 987654321">
+                <div class="timer-box">
+                    <span id="minutes" class="timer-value">00</span>
+                    <span class="timer-label">Minutos</span>
                 </div>
-                <button type="submit" class="submit-btn" id="submitBtn">🚀 Registrarme y obtener mi enlace</button>
-            </form>
-            <div id="alerts"></div>
+                <div class="timer-box">
+                    <span id="seconds" class="timer-value">00</span>
+                    <span class="timer-label">Segundos</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Sección de éxito -->
-        <div class="success-section" id="success-section">
-            <h2 class="success-title">🎉 ¡Ya estás participando!</h2>
-            <p>Comparte tu enlace para ganar más oportunidades:</p>
-            <div class="affiliate-link" id="affiliate-link"></div>
-            <button class="copy-btn" onclick="copyLink()">📋 Copiar enlace</button>
-            <button class="copy-btn" onclick="shareWhatsApp()">📱 Compartir en WhatsApp</button>
-        </div>
-
-        <!-- Ranking -->
-        <div class="ranking-section">
-            <h2>🏆 Ranking de Agentes</h2>
-            <table class="ranking-table">
-                <thead>
-                    <tr>
-                        <th>Posición</th>
-                        <th>Nombre</th>
-                        <th>Referidos</th>
-                    </tr>
-                </thead>
-                <tbody id="ranking-body">
-                    <tr><td colspan="3" class="loading">Cargando ranking...</td></tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 
-    <!-- ======================================================= -->
-    <!-- ============= SECCIÓN DE SCRIPT CORREGIDA ============= -->
-    <!-- ======================================================= -->
     <script>
-        // --- CONFIGURACIÓN ---
-        // [CORRECCIÓN] URL actualizada a tu última implementación.
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
-        const CAMPAIGN_END = new Date('2025-07-06T20:00:00-05:00');
-        const BASE_URL = window.location.origin + window.location.pathname;
+    // --- ⚙️ LÓGICA JAVASCRIPT ---
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Selectores de Elementos del DOM ---
+        const referralForm = document.getElementById('referralForm');
+        const registroCard = document.getElementById('registro-card');
+        const dashboardCard = document.getElementById('dashboard-card');
+        const rankingCard = document.getElementById('ranking-card');
+        const currentUserRankDiv = document.getElementById('current-user-rank');
+        const formMessage = document.getElementById('form-message');
+
+        const userNameInput = document.getElementById('userName');
+        const userIdInput = document.getElementById('userId');
+        const referrerIdInput = document.getElementById('referrerId');
         
-        let referredBy = null;
+        // --- Generación de ID y pre-llenado de campos ---
+        function generateUniqueId() {
+            const prefix = userNameInput.value.split(' ')[0].substring(0, 4).toUpperCase();
+            const randomPart = Math.random().toString(36).substring(2, 7).toUpperCase();
+            return prefix + randomPart;
+        }
 
-        // --- INICIALIZACIÓN ---
-        document.addEventListener('DOMContentLoaded', function() {
-            checkReferralCode();
-            startCountdown();
-            loadRanking();
-            checkExistingUser();
-            // Actualizar ranking cada 30 segundos
-            setInterval(loadRanking, 30000);
+        userNameInput.addEventListener('input', () => {
+            if (userNameInput.value.length > 2) {
+                userIdInput.value = generateUniqueId();
+            }
         });
 
-        // --- FUNCIONES PRINCIPALES ---
-
-        // Lee el código de referido de la URL (?ref=...)
-        function checkReferralCode() {
-            const urlParams = new URLSearchParams(window.location.search);
-            referredBy = urlParams.get('ref');
-            if (referredBy) {
-                console.log('Detectado código de referidor:', referredBy);
-            }
+        // Autorellenar el ID del referidor si viene en la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const refIdFromUrl = urlParams.get('ref');
+        if (refIdFromUrl) {
+            referrerIdInput.value = refIdFromUrl;
+            referrerIdInput.readOnly = true; // Opcional: hacerlo no editable
         }
 
-        // Verifica si el usuario ya se registró antes en este navegador
-        function checkExistingUser() {
-            const savedUserId = localStorage.getItem('userReferralId_TuVozTuSalud');
-            if (savedUserId) {
-                const referralLink = `${BASE_URL}?ref=${savedUserId}`;
-                showSuccessSection(referralLink);
+        // --- 🧠 2. Lógica del Formulario y Dashboard ---
+        referralForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            formMessage.textContent = ''; // Limpiar mensajes de error previos
+
+            // Recoger datos del formulario
+            const formData = new FormData(referralForm);
+            const data = Object.fromEntries(formData.entries());
+
+            if (!data.userName || !data.userEmail || !data.userYape || !data.userId) {
+                formMessage.textContent = 'Por favor, completa todos los campos requeridos.';
+                return;
             }
-        }
 
-        // Manejo del envío del formulario
-        document.getElementById('userForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+            // Simulación de envío. Aquí es donde conectarías con Google Apps Script.
+            console.log("Datos a enviar:", data);
             
-            const submitBtn = document.getElementById('submitBtn');
-            const alertsDiv = document.getElementById('alerts');
+            // --------------------------------------------------------------------------
+            // 🔽 AQUÍ VA LA CONEXIÓN CON GOOGLE APPS SCRIPT 🔽
+            // --------------------------------------------------------------------------
+            /*
+            const scriptURL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT'; // <-- ¡Pega tu URL aquí!
             
-            submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Registrando...';
-            alertsDiv.innerHTML = '';
-
-            // [CORRECCIÓN] Se ajusta el objeto para que coincida con lo que el backend espera.
-            // El backend ahora genera el ID y el timestamp por sí mismo.
-            const formData = {
-                nombre: document.getElementById('nombre').value.trim(),
-                correo: document.getElementById('correo').value.trim(),
-                yape: document.getElementById('yape').value.trim(),
-                ref: referredBy || '' // 'ref' es el nombre del parámetro que espera el script
-            };
-
-            try {
-                // [CORRECCIÓN] Se cambia el método de envío a uno más compatible con Apps Script.
-                // Usar 'text/plain' y 'redirect: follow' es la forma más robusta de evitar errores CORS.
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    redirect: 'follow',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(formData)
+            fetch(scriptURL, { method: 'POST', body: formData })
+                .then(response => {
+                    console.log('Success!', response);
+                    // Si el envío es exitoso, procede a mostrar el dashboard
+                    showDashboard(data);
+                    // Guardar estado en localStorage para recordar al usuario
+                    localStorage.setItem('tvtsUser', JSON.stringify(data));
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    formMessage.textContent = 'Hubo un error al registrar. Inténtalo de nuevo.';
                 });
+            */
+            // --------------------------------------------------------------------------
+            // FIN DE LA CONEXIÓN
+            // --------------------------------------------------------------------------
+            
+            // **Para la demo sin backend, simulamos el éxito directamente:**
+            showDashboard(data);
+            localStorage.setItem('tvtsUser', JSON.stringify(data));
 
-                const result = await response.json();
-                
-                if (result.success) {
-                    const newReferralId = result.referralId; // El backend nos devuelve el ID generado
-                    localStorage.setItem('userReferralId_TuVozTuSalud', newReferralId);
-                    const affiliateLink = `${BASE_URL}?ref=${newReferralId}`;
-                    showSuccessSection(affiliateLink);
-                    loadRanking(); // Actualizar ranking inmediatamente
-                } else {
-                    // Muestra el mensaje de error que viene del backend (ej: "Correo ya registrado")
-                    throw new Error(result.message || 'Ocurrió un error desconocido.');
-                }
-
-            } catch (error) {
-                console.error('Error al registrar:', error);
-                showAlert(`Error: ${error.message}`, 'error');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = '🚀 Registrarme y obtener mi enlace';
-            }
         });
 
-        // Carga y muestra el ranking
-        async function loadRanking() {
-            try {
-                const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getRanking`);
-                if (!response.ok) throw new Error('Respuesta no válida del servidor');
+        function showDashboard(userData) {
+            registroCard.classList.add('hidden');
+            dashboardCard.classList.remove('hidden');
+            currentUserRankDiv.classList.remove('hidden');
 
-                // [CORRECCIÓN] El script ahora devuelve un array de ranking directamente.
-                const rankingData = await response.json();
-                const tbody = document.getElementById('ranking-body');
-                
-                if (rankingData && rankingData.length > 0) {
-                    tbody.innerHTML = rankingData.map((user, index) => `
-                        <tr>
-                            <td class="position">#${index + 1}</td>
-                            <td>${user.nombre}</td>
-                            <td>${user.referidos}</td>
-                        </tr>
-                    `).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="3" class="loading">Aún no hay participantes en el ranking. ¡Sé el primero!</td></tr>';
-                }
-            } catch (error) {
-                console.error('Error cargando ranking:', error);
-                document.getElementById('ranking-body').innerHTML = 
-                    '<tr><td colspan="3" class="loading">Error al cargar el ranking. Intenta recargar la página.</td></tr>';
-            }
-        }
+            const domain = window.location.origin + window.location.pathname;
+            const referralLink = `${domain}?ref=${userData.userId}`;
 
-
-        // --- FUNCIONES AUXILIARES (Sin cambios, ya estaban bien) ---
-
-        function showSuccessSection(link) {
-            document.getElementById('registration-form').style.display = 'none';
-            document.getElementById('success-section').style.display = 'block';
-            document.getElementById('affiliate-link').textContent = link;
-        }
-
-        function copyLink() {
-            const link = document.getElementById('affiliate-link').textContent;
-            navigator.clipboard.writeText(link).then(() => {
-                alert('¡Enlace copiado!');
+            document.getElementById('dashboard-username').textContent = userData.userName.split(' ')[0];
+            document.getElementById('user-unique-id').textContent = userData.userId;
+            document.getElementById('user-referral-link').textContent = referralLink;
+            
+            // Lógica de los botones de compartir
+            const copyBtn = document.getElementById('copy-btn');
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(referralLink).then(() => {
+                    copyBtn.textContent = '¡Copiado!';
+                    setTimeout(() => { copyBtn.textContent = 'Copiar Enlace'; }, 2000);
+                });
             });
+
+            const whatsappBtn = document.getElementById('whatsapp-btn');
+            whatsappBtn.addEventListener('click', () => {
+                const message = encodeURIComponent(`¡Hola! Únete al movimiento "Tu Voz Tu Salud Perú" y ayúdanos a transformar el sistema de salud. Regístrate con mi enlace y participa por premios: ${referralLink}`);
+                window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
+            });
+
+            // Mostrar el puesto simulado del usuario
+            currentUserRankDiv.innerHTML = `¡Felicidades, <span style="color:var(--color-primario);">${userData.userName}</span>! Ya estás participando. Por ahora, estás en el <strong>puesto 3 de 124</strong>. ¡Invita a más gente para subir en el ranking!`;
+        }
+        
+        // --- Revisar si el usuario ya está registrado al cargar la página ---
+        const savedUser = localStorage.getItem('tvtsUser');
+        if (savedUser) {
+            showDashboard(JSON.parse(savedUser));
         }
 
-        function shareWhatsApp() {
-            const link = document.getElementById('affiliate-link').textContent;
-            const message = `🇵🇪 ¡Súmate a la campaña "Tu Voz Tu Salud Perú"! Regístrate con mi enlace y ayúdanos a hacer la diferencia: ${link}`;
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
+        // --- 🥇 3. Lógica del Ranking (Simulado) ---
+        const rankingList = document.getElementById('ranking-list');
+        const topReferrers = [
+            { name: 'Juan C.', count: 87 },
+            { name: 'Sofia V.', count: 72 },
+            { name: 'Carlos P.', count: 55 },
+            { name: 'Ana G.', count: 48 },
+            { name: 'Luis M.', count: 41 },
+            { name: 'Valeria R.', count: 35 },
+            { name: 'Diego S.', count: 29 },
+            { name: 'Camila T.', count: 22 },
+            { name: 'Mateo F.', count: 18 },
+            { name: 'Luciana H.', count: 15 },
+        ];
 
-        function showAlert(message, type) {
-            const alertsDiv = document.getElementById('alerts');
-            const alertClass = type === 'success' ? 'alert-success' : 'alert-error';
-            alertsDiv.innerHTML = `<div class="alert ${alertClass}">${message}</div>`;
-        }
+        topReferrers.forEach((user, index) => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('ranking-item');
+            listItem.innerHTML = `
+                <span class="rank-position">#${index + 1}</span>
+                <span class="rank-name">${user.name}</span>
+                <span class="rank-count">${user.count} referidos</span>
+            `;
+            rankingList.appendChild(listItem);
+        });
 
-        function startCountdown() {
-            const countdownEl = document.getElementById('countdown');
-            if (!countdownEl) return;
-            const interval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = CAMPAIGN_END.getTime() - now;
+        // --- ⏳ 4. Lógica del Temporizador ---
+        // ¡EDITA ESTA FECHA! Formato: Mes Día, Año HH:MM:SS
+        const countdownDate = new Date("June 29, 2024 23:59:59").getTime();
 
-                if (distance < 0) {
-                    clearInterval(interval);
-                    countdownEl.innerHTML = '<div style="color: #ff6b6b; font-size: 1.5rem;">🚨 ¡La campaña terminó! Gracias por participar.</div>';
-                    return;
-                }
-                document.getElementById('days').textContent = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                document.getElementById('hours').textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            }, 1000);
-        }
+        const timerInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerHTML = "<h3 style='color:var(--color-secundario);'>¡La campaña ha finalizado! Gracias por participar.</h3>";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+        }, 1000);
+    });
     </script>
+
 </body>
 </html>
