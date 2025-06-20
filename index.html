@@ -46,11 +46,27 @@
         <footer class="footer">Un proyecto de <a href="https://clinic-ios.com" target="_blank">Clinic IOS</a></footer>
     </main>
 
+    <!-- AQUÍ EMPIEZA LA NUEVA LÓGICA -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
         const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
 
+        // --- LA FUNCIÓN QUE RECIBIRÁ LOS DATOS DEL RANKING ---
+        function handleRankingData(data) {
+            const rankingList = document.getElementById('ranking-list');
+            if (data && data.error) {
+                console.error('Error desde el servidor:', data.error);
+                rankingList.innerHTML = '<p class="ranking-loader" style="color:red;">Error al cargar ranking.</p>';
+                return;
+            }
+            if (Array.isArray(data) && data.length > 0) {
+                rankingList.innerHTML = data.map((user, index) => `<div class="ranking-item"><div class="rank-pos">#${index + 1}</div><div class="rank-alias">${user.alias}</div><div class="rank-count">${user.count} referidos</div></div>`).join('');
+            } else {
+                rankingList.innerHTML = '<p class="ranking-loader">¡Sé el primero en el ranking!</p>';
+            }
+        }
+
+    document.addEventListener('DOMContentLoaded', () => {
         const heroSection = document.getElementById('hero-section');
         const mainContent = document.getElementById('main-content');
         const showContentBtn = document.getElementById('show-main-content-btn');
@@ -71,17 +87,27 @@
             whatsappBtn.onclick = () => { const message = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Responde esta corta encuesta y participa por premios: ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank'); };
         }
 
+        // --- LA NUEVA FORMA DE PEDIR EL RANKING (JSONP) ---
         function fetchRanking() {
             const rankingList = document.getElementById('ranking-list');
             rankingList.innerHTML = '<p class="ranking-loader">Cargando...</p>';
-            fetch(SCRIPT_URL)
-                .then(res => res.json())
-                .then(data => {
-                    if (Array.isArray(data) && data.length > 0) {
-                        rankingList.innerHTML = data.map((user, index) => `<div class="ranking-item"><div class="rank-pos">#${index + 1}</div><div class="rank-alias">${user.alias}</div><div class="rank-count">${user.count} referidos</div></div>`).join('');
-                    } else { rankingList.innerHTML = '<p class="ranking-loader">¡Sé el primero en el ranking!</p>'; }
-                })
-                .catch(error => { console.error('Error al cargar ranking:', error); rankingList.innerHTML = '<p class="ranking-loader" style="color:red;">Error al cargar ranking. Revisa la consola para más detalles.</p>'; });
+            
+            // 1. Crear un tag de script dinámicamente
+            const script = document.createElement('script');
+            // 2. La URL ahora pide la función de callback 'handleRankingData'
+            script.src = `${SCRIPT_URL}?callback=handleRankingData`;
+            
+            // 3. Añadir el script al documento, lo que dispara la petición
+            document.body.appendChild(script);
+
+            // 4. Limpieza (opcional pero buena práctica)
+            script.onload = () => {
+                document.body.removeChild(script);
+            };
+            script.onerror = () => {
+                 rankingList.innerHTML = '<p class="ranking-loader" style="color:red;">Error de red al cargar el ranking.</p>';
+                 document.body.removeChild(script);
+            }
         }
 
         function handleRegistration(event) {
@@ -96,6 +122,7 @@
             
             const formData = new FormData(referralForm);
             
+            // La petición de registro (POST) puede seguir usando fetch, suele ser menos problemática
             fetch(SCRIPT_URL, { method: 'POST', body: formData })
                 .then(res => res.json())
                 .then(data => {
@@ -114,7 +141,7 @@
                 .finally(() => { submitBtn.disabled = false; submitBtn.textContent = "Activar mi Panel"; });
         }
 
-        // --- INICIALIZACIÓN DE LA PÁGINA ---
+        // --- INICIALIZACIÓN ---
         showContentBtn.addEventListener('click', () => {
             heroSection.classList.add('hidden');
             mainContent.classList.remove('hidden');
@@ -127,12 +154,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const refIdFromUrl = urlParams.get('ref');
         
-        // Si Tally devuelve "@ref", lo tratamos como "Directo". Si no, usamos el valor correcto.
-        if (refIdFromUrl && refIdFromUrl.toLowerCase() !== '@ref') {
-            referrerIdInput.value = refIdFromUrl;
-        } else {
-            referrerIdInput.value = 'Directo';
-        }
+        referrerIdInput.value = (refIdFromUrl && refIdFromUrl !== '@ref') ? refIdFromUrl : 'Directo';
 
         const savedUser = localStorage.getItem('tvtsUser');
         if (savedUser) {
