@@ -4,42 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Voz Tu Salud Perú - Convierte tu voz en un premio</title>
-    
-    <!-- Fuentes e Iconos -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS (Sin cambios) */
-        :root{--color-primario:#007BFF;--color-secundario:#00C6A7;--color-fondo:#f8f9fa;--color-tarjeta:#ffffff;--color-texto-principal:#212529;--color-texto-secundario:#6c757d;--color-borde:#dee2e6;--sombra-tarjeta:0 8px 30px rgba(0,123,255,.1)}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;background-color:var(--color-fondo);color:var(--color-texto-principal);margin:0;line-height:1.7;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.container{max-width:800px;margin:0 auto;padding:20px}.hidden{display:none!important}.hero-section{text-align:center;padding:80px 20px 60px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh}.hero-section .icon-thanks{font-size:4rem;background:linear-gradient(45deg,var(--color-secundario),var(--color-primario));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}.hero-section h1{font-weight:800;font-size:clamp(2.2rem,6vw,3.5rem);line-height:1.2;margin:0 0 15px 0}.hero-section .subtitle{font-size:1.15rem;color:var(--color-texto-secundario);max-width:650px;margin:0 auto 40px auto}.cta-button{font-size:1.2rem;font-weight:700;padding:18px 35px;border-radius:50px;border:none;background:var(--color-primario);color:#fff;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;box-shadow:0 4px 20px rgba(0,123,255,.3)}.cta-button:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,123,255,.4)}.main-content{opacity:0;transition:opacity .6s ease-in-out}.main-content.visible{opacity:1}.card{background-color:var(--color-tarjeta);border-radius:16px;padding:30px 40px;margin-bottom:30px;box-shadow:var(--sombra-tarjeta);border:1px solid var(--color-borde)}h2{font-size:1.6rem;text-align:center;margin:0 0 25px 0;display:flex;align-items:center;justify-content:center;gap:12px}h2 .icon{color:var(--color-primario)}#registration-section p{text-align:center;margin-top:-15px;color:var(--color-texto-secundario)}.form-group{margin-bottom:20px}.form-group label{display:block;font-weight:600;margin-bottom:10px;font-size:1.1rem}.form-group input{width:100%;padding:16px;border:2px solid var(--color-borde);border-radius:10px;font-size:1.2rem;font-family:'Poppins',sans-serif;box-sizing:border-box;transition:border-color .3s,box-shadow .3s}.form-group input:focus{outline:0;border-color:var(--color-primario);box-shadow:0 0 0 4px rgba(0,123,255,.15)}.form-group .validation-note{font-size:.85rem;color:var(--color-texto-secundario);margin-top:5px}.btn-submit{width:100%;padding:16px;margin-top:15px;background:var(--color-secundario);color:#fff;border:none;border-radius:10px;font-size:1.2rem;font-weight:700;cursor:pointer;transition:background-color .3s,transform .2s}.btn-submit:hover{background-color:#009e86;transform:translateY(-2px)}.btn-submit:disabled{background-color:#9abcc5;cursor:not-allowed}.dashboard-intro{text-align:center;font-size:1.1rem;color:var(--color-texto-secundario);margin-top:-15px;margin-bottom:30px}.alias-container{text-align:center;background:#e7f3ff;padding:15px;border-radius:12px;margin-bottom:20px}.alias-container .label{font-size:.9rem;color:var(--color-primario)}.alias-container .value{font-size:1.5rem;font-weight:700;color:var(--color-primario)}.referral-link-container{text-align:center;padding:20px;border-radius:12px;border:2px dashed var(--color-secundario);word-wrap:break-word;font-weight:600}.dashboard-actions{display:flex;gap:15px;margin-top:25px;flex-wrap:wrap}.btn-action{padding:15px;border-radius:10px;font-size:1.1rem;font-weight:600;border:none;flex-grow:1;cursor:pointer;transition:all .3s}#copy-btn{background-color:var(--color-primario);color:#fff}#whatsapp-btn{background-color:#25d366;color:#fff}.ranking-list{list-style:none;padding:0;min-height:100px}.ranking-loader{text-align:center;color:var(--color-texto-secundario)}.ranking-item{display:flex;align-items:center;padding:15px;border-bottom:1px solid #f1f1f1}.ranking-item:last-child{border-bottom:none}.rank-pos{font-size:1.2rem;font-weight:800;color:var(--color-primario);width:40px}.rank-alias{font-weight:600;flex-grow:1}.rank-count{font-weight:700;color:var(--color-secundario)}#timer{display:flex;justify-content:space-around;text-align:center}.timer-value{font-size:2.5rem;font-weight:700;color:var(--color-primario)}.timer-label{font-size:.9rem;color:var(--color-texto-secundario)}.footer{text-align:center;padding:40px 20px;color:var(--color-texto-secundario);font-size:.9rem;margin-top:20px;border-top:1px solid var(--color-borde)}.footer a{color:var(--color-primario);font-weight:600;text-decoration:none}
+        :root{--color-primario:#007BFF;--color-secundario:#00C6A7;--color-fondo:#f8f9fa;--color-tarjeta:#ffffff;--color-texto-principal:#212529;--color-texto-secundario:#6c757d;--color-borde:#dee2e6;--sombra-tarjeta:0 8px 30px rgba(0,123,255,.1)}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;background-color:var(--color-fondo);color:var(--color-texto-principal);margin:0;line-height:1.7;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.container{max-width:800px;margin:0 auto;padding:20px}.hidden{display:none!important}.hero-section{text-align:center;padding:80px 20px 60px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh}.hero-section .icon-thanks{font-size:4rem;background:linear-gradient(45deg,var(--color-secundario),var(--color-primario));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px}.hero-section h1{font-weight:800;font-size:clamp(2.2rem,6vw,3.5rem);line-height:1.2;margin:0 0 15px 0}.hero-section .subtitle{font-size:1.15rem;color:var(--color-texto-secundario);max-width:650px;margin:0 auto 40px auto}.cta-button{font-size:1.2rem;font-weight:700;padding:18px 35px;border-radius:50px;border:none;background:var(--color-primario);color:#fff;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;box-shadow:0 4px 20px rgba(0,123,255,.3)}.cta-button:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,123,255,.4)}.main-content{opacity:0;transition:opacity .6s ease-in-out}.main-content.visible{opacity:1}.card{background-color:var(--color-tarjeta);border-radius:16px;padding:30px 40px;margin-bottom:30px;box-shadow:var(--sombra-tarjeta);border:1px solid var(--color-borde)}h2{font-size:1.6rem;text-align:center;margin:0 0 25px 0;display:flex;align-items:center;justify-content:center;gap:12px}h2 .icon{color:var(--color-primario)}#registration-section p{text-align:center;margin-top:-15px;color:var(--color-texto-secundario)}.form-group{margin-bottom:20px}.form-group label{display:block;font-weight:600;margin-bottom:10px;font-size:1.1rem}.form-group input{width:100%;padding:16px;border:2px solid var(--color-borde);border-radius:10px;font-size:1.2rem;font-family:'Poppins',sans-serif;box-sizing:border-box;transition:border-color .3s,box-shadow .3s}.form-group input:focus{outline:0;border-color:var(--color-primario);box-shadow:0 0 0 4px rgba(0,123,255,.15)}.form-group .validation-note{font-size:.85rem;color:var(--color-texto-secundario);margin-top:5px}.btn-submit{width:100%;padding:16px;margin-top:15px;background:var(--color-secundario);color:#fff;border:none;border-radius:10px;font-size:1.2rem;font-weight:700;cursor:pointer;transition:background-color .3s,transform .2s}.btn-submit:hover{background-color:#009e86;transform:translateY(-2px)}.btn-submit:disabled{background-color:#9abcc5;cursor:not-allowed}.dashboard-intro{text-align:center;font-size:1.1rem;color:var(--color-texto-secundario);margin-top:-15px;margin-bottom:30px}.alias-container{text-align:center;background:#e7f3ff;padding:15px;border-radius:12px;margin-bottom:20px}.alias-container .label{font-size:.9rem;color:var(--color-primario)}.alias-container .value{font-size:1.5rem;font-weight:700;color:var(--color-primario)}.referral-link-container{text-align:center;padding:20px;border-radius:12px;border:2px dashed var(--color-secundario);word-wrap:break-word;font-weight:600}.dashboard-actions{display:flex;gap:15px;margin-top:25px;flex-wrap:wrap}.btn-action{padding:15px;border-radius:10px;font-size:1.1rem;font-weight:600;border:none;flex-grow:1;cursor:pointer;transition:all .3s}#copy-btn{background-color:var(--color-primario);color:#fff}#whatsapp-btn{background-color:#25d366;color:#fff}.ranking-list{list-style:none;padding:0;min-height:100px}.ranking-loader{text-align:center;color:var(--color-texto-secundario)}.ranking-item{display:flex;align-items:center;padding:15px;border-bottom:1px solid #f1f1f1}.ranking-item:last-child{border-bottom:none}.rank-pos{font-size:1.2rem;font-weight:800;color:var(--color-primario);width:40px}.rank-alias{font-weight:600;flex-grow:1}.rank-count{font-weight:700;color:var(--color-secundario)}#timer{display:flex;justify-content:space-around;text-align:center}.timer-value{font-size:2.5rem;font-weight:700;color:var(--color-primario)}.timer-label{font-size:.9rem;color:var(--color-texto-secundario)}.footer{text-align:center;padding:40px 20px;color:var(--color-texto-secundario);font-size:.9rem;margin-top:20px;border-top:1px solid var(--color-borde)}.footer a{color:var(--color-primario);font-weight:600;text-decoration:none}.survey-button{display:block;width:100%;text-align:center;text-decoration:none;font-size:1.2rem;font-weight:700;padding:18px 35px;margin-bottom:20px;border-radius:10px;border:none;background:var(--color-primario);color:#fff;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;box-shadow:0 4px 20px rgba(0,123,255,.3)}.survey-button:hover{transform:translateY(-5px)}
     </style>
 </head>
-
 <body>
-    <!-- HTML (Sin cambios) -->
-    <div id="hero-section" class="hero-section">
-        <i class="fas fa-check-circle icon-thanks"></i>
-        <h1>¡Tu voz ya fue escuchada!</h1>
-        <p class="subtitle">Gracias por completar la encuesta. Tu participación es un paso gigante. Ahora, ayúdanos a sumar más voces y <strong>compite por S/100</strong>.</p>
-        <button id="show-main-content-btn" class="cta-button">¡Claro! Quiero participar por los premios</button>
+    <div id="landing-page">
+        <div class="hero-section">
+            <i class="fas fa-bullhorn icon-thanks"></i>
+            <h1>Únete al movimiento "Tu Voz Tu Salud"</h1>
+            <p class="subtitle">Tu opinión es crucial para transformar el sistema de salud del Perú. Participa, comparte y gana premios por tu impacto.</p>
+            <a id="go-to-survey-btn" href="#" class="cta-button">¡Empezar ahora!</a>
+        </div>
     </div>
+
     <main id="main-content" class="main-content hidden">
         <div class="container">
             <div id="registration-section" class="card">
-                <h2><i class="icon fas fa-award"></i> Conviértete en Agente de Cambio</h2>
-                <p>Elige tu nombre de Agente y registra tu Yape para entrar al sorteo y la competencia.</p>
+                <h2><i class="icon fas fa-award"></i>¡Último paso! Conviértete en Agente</h2>
+                <p>Crea tu alias y registra tu Yape para entrar al sorteo y competir por el gran premio.</p>
                 <form id="referralForm">
-                    <div class="form-group">
-                        <label for="userAlias">Crea tu Alias (para el ranking)</label>
-                        <input type="text" id="userAlias" name="userAlias" placeholder="Ej: LiderSalud24" required>
-                        <div class="validation-note">Solo letras, números, guiones y guiones bajos. Sin espacios.</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="userYape">Tu número de Celular o Yape</label>
-                        <input type="tel" id="userYape" name="userYape" placeholder="Ej: 987 654 321" required>
-                    </div>
+                    <div class="form-group"><label for="userAlias">Crea tu Alias (para el ranking)</label><input type="text" id="userAlias" name="userAlias" placeholder="Ej: LiderSalud24" required><div class="validation-note">Solo letras, números, guiones y guiones bajos. Sin espacios.</div></div>
+                    <div class="form-group"><label for="userYape">Tu número de Celular o Yape</label><input type="tel" id="userYape" name="userYape" placeholder="Ej: 987 654 321" required></div>
                     <input type="hidden" id="referrerId" name="referrerId">
                     <button type="submit" id="submit-btn" class="btn-submit">Activar mi Panel y Participar</button>
                 </form>
@@ -47,108 +34,128 @@
             <div id="dashboard-section" class="card hidden">
                 <h2><i class="icon fas fa-rocket"></i> ¡Excelente! Tu panel está activo</h2>
                 <p class="dashboard-intro">Ya eres oficialmente parte del equipo. ¡Este es tu kit para empezar a sumar voces!</p>
-                <div class="alias-container">
-                    <div class="label">Tu Alias de Agente de Cambio</div>
-                    <div id="user-alias-display" class="value"></div>
-                </div>
+                <div class="alias-container"><div class="label">Tu Alias de Agente de Cambio</div><div id="user-alias-display" class="value"></div></div>
                 <p style="text-align:center; font-weight:600; margin-bottom:10px;">Comparte este enlace personal:</p>
                 <div id="user-referral-link" class="referral-link-container"></div>
-                <div class="dashboard-actions">
-                    <button id="copy-btn" class="btn-action"><i class="fas fa-copy"></i> Copiar Enlace</button>
-                    <button id="whatsapp-btn" class="btn-action"><i class="fab fa-whatsapp"></i> Compartir</button>
-                </div>
+                <div class="dashboard-actions"><button id="copy-btn" class="btn-action"><i class="fas fa-copy"></i> Copiar Enlace</button><button id="whatsapp-btn" class="btn-action"><i class="fab fa-whatsapp"></i> Compartir</button></div>
             </div>
             <div class="card">
                 <h2><i class="icon fas fa-ranking-star"></i>Top Agentes de Cambio</h2>
                 <div id="ranking-list" class="ranking-list"><p class="ranking-loader">Cargando ranking en tiempo real...</p></div>
             </div>
-            <div class="card">
-                <h2><i class="icon fas fa-clock"></i>Cierre de la campaña</h2>
-                <div id="timer"></div>
-            </div>
+            <div class="card"><h2><i class="icon fas fa-clock"></i>Cierre de la campaña</h2><div id="timer"></div></div>
         </div>
-        <footer class="footer">
-             Un proyecto de <a href="https://clinic-ios.com" target="_blank">Clinic IOS</a> para la campaña nacional <br><strong>Tu Voz Tu Salud Perú</strong>
-        </footer>
+        <footer class="footer">Un proyecto de <a href="https://clinic-ios.com" target="_blank">Clinic IOS</a> para la campaña nacional <br><strong>Tu Voz Tu Salud Perú</strong></footer>
     </main>
 
     <script>
-    // Se ejecuta tan pronto como el DOM está listo
-    (function() {
+    document.addEventListener('DOMContentLoaded', () => {
         // --- CONFIGURACIÓN ---
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
         const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
-        const GITHUB_PAGE_URL = window.location.origin + window.location.pathname; // URL de esta misma página
-        
-        // --- LÓGICA DE REDIRECCIÓN (Plan C) ---
+        const GITHUB_PAGE_URL = window.location.origin + window.location.pathname;
+
+        // --- SELECTORES ---
+        const landingPage = document.getElementById('landing-page');
+        const mainContent = document.getElementById('main-content');
+        const goToSurveyBtn = document.getElementById('go-to-survey-btn');
+        const referralForm = document.getElementById('referralForm');
+        const registrationSection = document.getElementById('registration-section');
+        const dashboardSection = document.getElementById('dashboard-section');
+        const submitBtn = document.getElementById('submit-btn');
+        const rankingList = document.getElementById('ranking-list');
+        const referrerIdInput = document.getElementById('referrerId');
+
+        // --- LÓGICA PRINCIPAL ---
+
+        // 1. Decidir qué mostrar al cargar la página
         const urlParams = new URLSearchParams(window.location.search);
         const refIdFromUrl = urlParams.get('ref');
-        const isRedirectedFromTally = urlParams.get('source') === 'tally';
+        const sourceFromUrl = urlParams.get('source');
 
-        if (refIdFromUrl && !isRedirectedFromTally) {
-            // Si hay un 'ref' y NO venimos de Tally, es un referido. Redirigir a Tally AÑADIENDO el ref.
-            const newTallyUrl = `${TALLY_FORM_URL}?ref=${refIdFromUrl}`;
-            window.location.href = newTallyUrl;
-            return; // Detener la ejecución del resto del script
+        if (refIdFromUrl) {
+            // Si hay un 'ref', lo guardamos en la memoria del navegador.
+            localStorage.setItem('tvts_referrer', refIdFromUrl);
         }
         
-        // El resto del script solo se ejecuta si no hay redirección
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- SELECTORES ---
-            const heroSection = document.getElementById('hero-section');
-            const mainContent = document.getElementById('main-content');
-            const showContentBtn = document.getElementById('show-main-content-btn');
-            const referralForm = document.getElementById('referralForm');
-            const registrationSection = document.getElementById('registration-section');
-            const dashboardSection = document.getElementById('dashboard-section');
-            const submitBtn = document.getElementById('submit-btn');
-            const rankingList = document.getElementById('ranking-list');
-            const referrerIdInput = document.getElementById('referrerId');
+        if (sourceFromUrl === 'tally') {
+            // Si el usuario VIENE DE TALLY, mostramos el formulario de registro.
+            landingPage.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            mainContent.classList.add('visible');
+            // Recuperamos el referido que guardamos antes y lo ponemos en el campo oculto.
+            referrerIdInput.value = localStorage.getItem('tvts_referrer') || 'Directo';
+            fetchRanking();
+        } else {
+            // Si es la primera visita (o un afiliado), mostramos la página de bienvenida.
+            landingPage.classList.remove('hidden');
+        }
 
-            // Asignar el valor del referido que sobrevivió a la redirección
-            referrerIdInput.value = urlParams.get('tally_ref') || 'Directo';
-
-            // --- FUNCIONES ---
-            function showDashboard(userData) {
-                registrationSection.classList.add('hidden');
-                dashboardSection.classList.remove('hidden');
-
-                // El enlace de referido ahora apunta a ESTA MISMA PÁGINA
-                const referralLink = `${GITHUB_PAGE_URL}?ref=${userData.userAlias}`;
-
-                document.getElementById('user-alias-display').textContent = userData.userAlias;
-                document.getElementById('user-referral-link').textContent = referralLink;
-
-                const copyBtn = document.getElementById('copy-btn');
-                copyBtn.onclick = () => { /* ... */ };
-                const whatsappBtn = document.getElementById('whatsapp-btn');
-                whatsappBtn.onclick = () => { /* ... */ };
-            }
-
-            function fetchRanking() { /* ... */ }
-
-            function handleRegistration(event) { /* ... */ }
-            
-            // --- INICIALIZACIÓN ---
-            showContentBtn.addEventListener('click', () => {
-                heroSection.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-                setTimeout(() => mainContent.classList.add('visible'), 50);
-                fetchRanking();
-            });
-            
-            referralForm.addEventListener('submit', handleRegistration);
-
-            const savedUser = localStorage.getItem('tvtsUser');
-            if (savedUser) {
-                heroSection.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-                mainContent.classList.add('visible');
-                showDashboard(JSON.parse(savedUser));
-                fetchRanking();
-            }
+        // 2. Lógica del botón de la página de bienvenida
+        goToSurveyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Llevamos al usuario a Tally. No necesitamos pasar el 'ref' aquí porque ya está en localStorage.
+            window.location.href = TALLY_FORM_URL;
         });
-    })();
+
+        // 3. Revisar si el usuario ya está registrado (máxima prioridad)
+        const savedUser = localStorage.getItem('tvtsUser');
+        if (savedUser) {
+            landingPage.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            mainContent.classList.add('visible');
+            showDashboard(JSON.parse(savedUser));
+            fetchRanking();
+        }
+
+        // --- FUNCIONES AUXILIARES ---
+        function showDashboard(userData) {
+            registrationSection.classList.add('hidden');
+            dashboardSection.classList.remove('hidden');
+            const referralLink = `${GITHUB_PAGE_URL}?ref=${userData.userAlias}`;
+            document.getElementById('user-alias-display').textContent = userData.userAlias;
+            document.getElementById('user-referral-link').textContent = referralLink;
+            const copyBtn = document.getElementById('copy-btn');
+            copyBtn.onclick = () => { navigator.clipboard.writeText(referralLink).then(() => { copyBtn.innerHTML = '<i class="fas fa-check"></i> ¡Copiado!'; setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copiar Enlace'; }, 2000); }); };
+            const whatsappBtn = document.getElementById('whatsapp-btn');
+            whatsappBtn.onclick = () => { const message = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Responde esta corta encuesta y participa por premios. ¡Es súper importante! 💪🇵🇪 ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank'); };
+        }
+
+        function fetchRanking() {
+            rankingList.innerHTML = '<p class="ranking-loader">Cargando...</p>';
+            fetch(SCRIPT_URL).then(res => res.json()).then(data => {
+                if (Array.isArray(data) && data.length > 0) {
+                    rankingList.innerHTML = data.map((user, index) => `<div class="ranking-item"><div class="rank-pos">#${index+1}</div><div class="rank-alias">${user.alias}</div><div class="rank-count">${user.count} referidos</div></div>`).join('');
+                } else {
+                    rankingList.innerHTML = '<p class="ranking-loader">¡Sé el primero en el ranking!</p>';
+                }
+            }).catch(error => { console.error('Error ranking:', error); rankingList.innerHTML = '<p class="ranking-loader">Error al cargar ranking.</p>'; });
+        }
+
+        referralForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const alias = document.getElementById('userAlias').value;
+            const yape = document.getElementById('userYape').value;
+            if (!/^[a-zA-Z0-9_-]+$/.test(alias)) { alert('Alias inválido.'); return; }
+            if (!/^[9]\d{8}$/.test(yape)) { alert('Yape inválido.'); return; }
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Registrando...";
+            const formData = new FormData(referralForm);
+            fetch(SCRIPT_URL, { method: 'POST', body: formData }).then(res => res.json()).then(data => {
+                if (data.result === 'success') {
+                    const userData = { userAlias: alias };
+                    alert(`¡Felicidades, ${userData.userAlias}! Registro exitoso.`);
+                    showDashboard(userData);
+                    localStorage.setItem('tvtsUser', JSON.stringify(userData));
+                    localStorage.removeItem('tvts_referrer'); // Limpiamos el referido temporal
+                    fetchRanking();
+                } else { throw new Error(data.error || 'Error del servidor.'); }
+            }).catch(error => {
+                console.error('Error registro:', error.message);
+                if (error.message.includes("ya existe")) { alert("Error: ¡Ese alias ya está en uso! Elige otro."); } else { alert('Hubo un error al registrar.'); }
+            }).finally(() => { submitBtn.disabled = false; submitBtn.textContent = "Activar mi Panel"; });
+        });
+    });
     </script>
 </body>
 </html>
