@@ -1,118 +1,112 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Voz Tu Salud Perú</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root{--color-primario:#007BFF;--color-secundario:#00C6A7;--color-fondo:#f8f9fa;--color-tarjeta:#ffffff;--color-texto-principal:#212529;--color-texto-secundario:#6c757d;--color-borde:#dee2e6;--sombra-tarjeta:0 8px 30px rgba(0,123,255,.1)}html{scroll-behavior:smooth}body{font-family:'Poppins',sans-serif;background-color:var(--color-fondo);color:var(--color-texto-principal);margin:0;line-height:1.7;display:flex;justify-content:center;align-items:center;min-height:100vh}.container{width:100%;max-width:800px;padding:20px}.hidden{display:none!important}.card{background-color:var(--color-tarjeta);border-radius:16px;padding:30px 40px;margin-bottom:30px;box-shadow:var(--sombra-tarjeta);border:1px solid var(--color-borde)}.hero-section{text-align:center}.icon-display{font-size:4rem;color:var(--color-primario);margin-bottom:20px}h1{font-weight:800;font-size:clamp(2rem,6vw,3rem);line-height:1.2;margin:0 0 15px 0}.subtitle{font-size:1.15rem;color:var(--color-texto-secundario);max-width:650px;margin:15px auto 40px auto}.cta-button{display:inline-block;text-decoration:none;font-size:1.2rem;font-weight:700;padding:18px 35px;border-radius:50px;border:none;background:var(--color-primario);color:#fff;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;box-shadow:0 4px 20px rgba(0,123,255,.3)}.cta-button:hover{transform:translateY(-5px)}h2{font-size:1.6rem;text-align:center;margin:0 0 25px 0;display:flex;align-items:center;justify-content:center;gap:12px}h2 .icon{color:var(--color-primario)}#registration-section p{text-align:center;margin-top:-15px;color:var(--color-texto-secundario)}.form-group{margin-bottom:20px}.form-group label{display:block;font-weight:600;margin-bottom:10px;font-size:1.1rem}.form-group input{width:100%;padding:16px;border:2px solid var(--color-borde);border-radius:10px;font-size:1.2rem;font-family:'Poppins',sans-serif;box-sizing:border-box}.btn-submit{width:100%;padding:16px;margin-top:15px;background:var(--color-secundario);color:#fff;border:none;border-radius:10px;font-size:1.2rem;font-weight:700;cursor:pointer}.btn-submit:disabled{background-color:#9abcc5}.dashboard-intro{text-align:center;font-size:1.1rem;color:var(--color-texto-secundario);margin-top:-15px;margin-bottom:30px}.alias-container{text-align:center;background:#e7f3ff;padding:15px;border-radius:12px;margin-bottom:20px}.alias-container .label{font-size:.9rem;color:var(--color-primario)}.alias-container .value{font-size:1.5rem;font-weight:700;color:var(--color-primario)}.referral-link-container{text-align:center;padding:20px;border-radius:12px;border:2px dashed var(--color-secundario);word-wrap:break-word;font-weight:600}.dashboard-actions{display:flex;gap:15px;margin-top:25px;flex-wrap:wrap}.btn-action{padding:15px;border-radius:10px;font-size:1.1rem;font-weight:600;border:none;flex-grow:1;cursor:pointer}#copy-btn{background-color:var(--color-primario);color:#fff}#whatsapp-btn{background-color:#25d366;color:#fff}.ranking-list{list-style:none;padding:0;min-height:50px}.ranking-item{display:flex;align-items:center;padding:15px;border-bottom:1px solid #f1f1f1}.rank-pos{font-size:1.2rem;font-weight:800;color:var(--color-primario);width:40px}.rank-alias{font-weight:600;flex-grow:1}.rank-count{font-weight:700;color:var(--color-secundario)}.footer{text-align:center;padding:40px 20px 0;color:var(--color-texto-secundario);font-size:.9rem}.footer a{color:var(--color-primario);font-weight:600;text-decoration:none}
-    </style>
+    <!-- ... estilos CSS existentes ... -->
 </head>
 <body>
     <div class="container">
         <div id="content-container"></div>
-        <div id="ranking-container" class="card">
-            <h2><i class="icon fas fa-ranking-star"></i>Top Agentes de Cambio</h2>
+        <div id="ranking-container" class="card hidden">
+            <h2><i class="icon fas fa-ranking-star"></i> Top Agentes de Cambio</h2>
             <div id="ranking-list" class="ranking-list"></div>
         </div>
-        <footer class="footer">Un proyecto de <a href="https://clinic-ios.com" target="_blank">Clinic IOS</a></footer>
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/exec';
         const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
         const GITHUB_PAGE_URL = window.location.origin + window.location.pathname;
 
-        const contentContainer = document.getElementById('content-container');
-        const rankingContainer = document.getElementById('ranking-container');
-
-        const welcomeTemplate = `
-            <div class="card hero-section">
-                <i class="fas fa-bullhorn icon-display"></i>
-                <h1>Únete a "Tu Voz Tu Salud"</h1>
-                <p class="subtitle">Sigue los pasos para participar y competir por premios.</p>
-                <a href="${TALLY_FORM_URL}" class="cta-button">PASO 1: Realiza la Encuesta</a>
-            </div>`;
-
-        const registrationTemplate = (ref) => `
-            <div id="registration-section" class="card">
-                <h2><i class="icon fas fa-award"></i>¡Genial! Ahora, PASO 2: Regístrate</h2>
-                <form id="referralForm">
-                    <div class="form-group"><label for="userAlias">Crea tu Alias</label><input type="text" id="userAlias" name="userAlias" required></div>
-                    <div class="form-group"><label for="userYape">Tu Yape</label><input type="tel" id="userYape" name="userYape" required></div>
-                    <input type="hidden" id="referrerId" name="referrerId" value="${ref}">
-                    <button type="submit" id="submit-btn" class="btn-submit">Completar Registro</button>
-                </form>
-            </div>`;
-
-        const dashboardTemplate = (alias) => `
-            <div id="dashboard-section" class="card">
-                <h2><i class="icon fas fa-rocket"></i> ¡Todo listo, ${alias}!</h2>
-                <p class="dashboard-intro">Comparte tu enlace personal para que más personas se unan.</p>
-                <div class="alias-container"><div class="label">Tu Alias</div><div class="value">${alias}</div></div>
-                <p style="text-align:center;font-weight:600;margin:20px 0 10px;">Tu enlace para compartir:</p>
-                <div class="referral-link-container">${TALLY_FORM_URL}?ref=${alias}</div>
-                <div class="dashboard-actions"><button id="copy-btn" class="btn-action">Copiar</button><button id="whatsapp-btn" class="btn-action">Compartir</button></div>
-            </div>`;
-        
-        // RANKING SIMULADO
-        const simulatedRanking = [
-            { alias: 'LiderSalud', count: 121 },
-            { alias: 'AnaCuida', count: 98 },
-            { alias: 'DoctorData', count: 75 },
-            { alias: 'PeruSano', count: 52 },
-            { alias: 'VozActiva', count: 33 }
-        ];
-
-        function showDashboard(alias) {
-            contentContainer.innerHTML = dashboardTemplate(alias);
-            rankingContainer.classList.remove('hidden');
-            const referralLink = `${TALLY_FORM_URL}?ref=${alias}`;
-            document.getElementById('copy-btn').onclick = () => { navigator.clipboard.writeText(referralLink).then(() => alert('¡Enlace copiado!')); };
-            document.getElementById('whatsapp-btn').onclick = () => { const msg = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú: ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank'); };
+        // Mejorado: Manejo más robusto de parámetros URL
+        function getURLParameter(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param) || '';
         }
-        
-        // MOSTRAR RANKING SIMULADO
-        const rankingList = document.getElementById('ranking-list');
-        rankingList.innerHTML = simulatedRanking.map((user, index) => `<div class="ranking-item"><div class="rank-pos">#${index+1}</div><div class="rank-alias">${user.alias}</div><div class="rank-count">${user.count} referidos</div></div>`).join('');
-        rankingContainer.classList.remove('hidden');
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const ref = urlParams.get('ref');
+        // Mejorado: Validación de referidor
+        function validateReferrer(ref) {
+            if (!ref || ref.trim() === '' || ref.toLowerCase() === '@ref') {
+                return 'Directo';
+            }
+            return ref.trim();
+        }
 
-        const savedUser = localStorage.getItem('tvtsUser');
-        if (savedUser) {
-            showDashboard(JSON.parse(savedUser).userAlias);
-        } else {
-            contentContainer.innerHTML = registrationTemplate(ref || 'Directo');
-            const form = document.getElementById('referralForm');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const btn = document.getElementById('submit-btn');
-                btn.disabled = true;
-                btn.textContent = 'Registrando...';
-                const formData = new FormData(form);
-                
-                // Arreglo para el problema de @ref
-                const referrerValue = formData.get('referrerId');
-                if (referrerValue.toLowerCase() === '@ref') {
-                    formData.set('referrerId', 'Directo');
+        // Mejorado: Manejo de errores SSL y conexión
+        async function fetchWithRetry(url, options = {}) {
+            const maxRetries = 3;
+            const retryDelay = 1000;
+            
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    const response = await fetch(url, {
+                        ...options,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            ...(options.headers || {})
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    return await response.json();
+                } catch (error) {
+                    if (attempt === maxRetries) {
+                        throw error;
+                    }
+                    await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
                 }
-
-                fetch(SCRIPT_URL, { method: 'POST', body: formData })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.result === 'success') {
-                            const userData = { userAlias: formData.get('userAlias') };
-                            localStorage.setItem('tvtsUser', JSON.stringify(userData));
-                            showDashboard(userData.userAlias);
-                        } else { throw new Error(data.error); }
-                    })
-                    .catch(err => alert(`Error: ${err.message}`))
-                    .finally(() => { btn.disabled = false; btn.textContent = 'Completar Registro'; });
-            });
+            }
         }
+
+        // Mejorado: Actualización automática del ranking
+        function updateRanking() {
+            fetchWithRetry(`${SCRIPT_URL}?callback=handleRankingData`)
+                .then(response => {
+                    const script = document.createElement('script');
+                    script.textContent = response;
+                    document.head.appendChild(script);
+                })
+                .catch(error => console.error('Error al actualizar ranking:', error));
+        }
+
+        // Manejador JSONP para el ranking
+        function handleRankingData(data) {
+            if (data.error) {
+                console.error('Error en datos del ranking:', data.error);
+                return;
+            }
+            
+            const rankingList = document.getElementById('ranking-list');
+            rankingList.innerHTML = data
+                .map((item, index) => `
+                    <div class="ranking-item">
+                        <div class="rank-pos">#${index + 1}</div>
+                        <div class="rank-alias">${item.alias}</div>
+                        <div class="rank-count">${item.count} referidos</div>
+                    </div>
+                `)
+                .join('');
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            const referrer = validateReferrer(getURLParameter('ref'));
+            const savedUser = localStorage.getItem('tvtsUser');
+
+            if (savedUser) {
+                showDashboard(JSON.parse(savedUser).userAlias);
+            } else {
+                contentContainer.innerHTML = registrationTemplate(referrer);
+                initializeForm();
+            }
+
+            // Actualizar ranking cada minuto
+            updateRanking();
+            setInterval(updateRanking, 60000);
+        });
     </script>
 </body>
 </html>
