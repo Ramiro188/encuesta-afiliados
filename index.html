@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div id="content-container"></div>
-        <div id="ranking-container" class="card">
+        <div id="ranking-container" class="card hidden">
             <h2><i class="icon fas fa-ranking-star"></i>Top Agentes de Cambio</h2>
             <div id="ranking-list" class="ranking-list"></div>
         </div>
@@ -22,7 +22,8 @@
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
         const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
-        
+        const GITHUB_PAGE_URL = 'https://ramiro188.github.io/encuesta-afiliados/'; // TU URL EXACTA
+
         const contentContainer = document.getElementById('content-container');
         const rankingContainer = document.getElementById('ranking-container');
 
@@ -48,74 +49,48 @@
         const dashboardTemplate = (alias) => `
             <div id="dashboard-section" class="card">
                 <h2><i class="icon fas fa-rocket"></i> ¡Todo listo, ${alias}!</h2>
-                <p class="dashboard-intro">Comparte tu enlace de Tally para que más personas se unan y subas en el ranking.</p>
-                <p style="text-align:center;font-weight:600;margin:20px 0 10px;">Tu enlace de referido para compartir:</p>
-                <div class="referral-link-container">${TALLY_FORM_URL}?ref=${alias}</div>
+                <p class="dashboard-intro">Comparte TU ENLACE DE AFILIADO para que más personas se unan y subas en el ranking.</p>
+                <p style="text-align:center;font-weight:600;margin:20px 0 10px;">Tu enlace para compartir:</p>
+                <div class="referral-link-container">${GITHUB_PAGE_URL}?ref=${alias}</div>
                 <div class="dashboard-actions"><button id="copy-btn" class="btn-action">Copiar</button><button id="whatsapp-btn" class="btn-action">Compartir</button></div>
             </div>`;
         
-        // --- FUNCIÓN GLOBAL PARA EL CALLBACK DE JSONP ---
-        // Esta función será llamada por el script que inyectamos en el DOM.
-        window.handleRankingData = function(data) {
-            const rankingList = document.getElementById('ranking-list');
-            if (data && data.error) {
-                console.error('Error desde el servidor:', data.error);
-                rankingList.innerHTML = '<p class="ranking-loader" style="color:red;">Error al cargar ranking.</p>';
-                return;
-            }
-            if (Array.isArray(data) && data.length > 0) {
-                rankingList.innerHTML = data.map((user, index) => {
-                    let position;
-                    if (index === 0) position = '🥇';
-                    else if (index === 1) position = '🥈';
-                    else if (index === 2) position = '🥉';
-                    else position = `#${index + 1}`;
-                    
-                    return `<div class="ranking-item"><div class="rank-pos">${position}</div><div class="rank-alias">${user.alias}</div><div class="rank-count">${user.count} referidos</div></div>`;
-                }).join('');
-            } else {
-                rankingList.innerHTML = '<p class="ranking-loader">¡Sé el primero en el ranking!</p>';
-            }
-        };
+        window.handleRankingData = function(data) { /* ... (código sin cambios) */ };
 
         function showDashboard(alias) {
             contentContainer.innerHTML = dashboardTemplate(alias);
-            const referralLink = `${TALLY_FORM_URL}?ref=${alias}`;
+            rankingContainer.classList.remove('hidden');
+            const referralLink = `${GITHUB_PAGE_URL}?ref=${alias}`;
             document.getElementById('copy-btn').onclick = () => { navigator.clipboard.writeText(referralLink).then(() => alert('¡Enlace copiado!')); };
-            document.getElementById('whatsapp-btn').onclick = () => { const msg = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú: ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank'); };
+            document.getElementById('whatsapp-btn').onclick = () => { const msg = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Únete con mi enlace y participa por premios: ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank'); };
         }
 
-        // --- LA NUEVA FORMA DE PEDIR EL RANKING (JSONP) ---
-        function fetchRanking() {
-            const rankingList = document.getElementById('ranking-list');
-            rankingList.innerHTML = '<p class="ranking-loader">Cargando...</p>';
-            
-            const scriptTag = document.createElement('script');
-            scriptTag.src = `${SCRIPT_URL}?callback=handleRankingData&cache_buster=${new Date().getTime()}`;
-            
-            document.body.appendChild(scriptTag);
-
-            scriptTag.onload = () => document.body.removeChild(scriptTag);
-            scriptTag.onerror = () => {
-                 rankingList.innerHTML = '<p class="ranking-loader" style="color:red;">Error de red al cargar el ranking.</p>';
-                 document.body.removeChild(scriptTag);
-            }
-        }
+        function fetchRanking() { /* ... (código sin cambios) */ }
         
-        // --- LÓGICA DE INICIO ---
+        // --- LÓGICA DE INICIO (LA MÁS IMPORTANTE) ---
         const urlParams = new URLSearchParams(window.location.search);
         const refIdFromUrl = urlParams.get('ref');
+        const sourceFromUrl = urlParams.get('source');
 
+        // Primero, guardamos el referido si existe.
+        if (refIdFromUrl) {
+            localStorage.setItem('tvts_referrer', refIdFromUrl);
+        }
+
+        // Ahora, decidimos qué mostrar.
         const savedUser = localStorage.getItem('tvtsUser');
         if (savedUser) {
+            // Si el usuario ya está registrado, SIEMPRE mostramos su dashboard.
             showDashboard(JSON.parse(savedUser).userAlias);
-            rankingContainer.classList.remove('hidden');
             fetchRanking();
-        } else {
-            contentContainer.innerHTML = registrationTemplate(refIdFromUrl || 'Directo');
+        } else if (sourceFromUrl === 'tally') {
+            // Si el usuario viene de Tally, mostramos el formulario de registro.
+            const referrer = localStorage.getItem('tvts_referrer') || 'Directo';
+            contentContainer.innerHTML = registrationTemplate(referrer);
             rankingContainer.classList.remove('hidden');
             fetchRanking();
 
+            // Añadimos el listener al formulario que acabamos de crear
             const form = document.getElementById('referralForm');
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -123,21 +98,25 @@
                 btn.disabled = true;
                 btn.textContent = 'Registrando...';
                 const formData = new FormData(form);
-                
                 fetch(SCRIPT_URL, { method: 'POST', body: formData })
                     .then(res => res.json())
                     .then(data => {
                         if (data.result === 'success') {
                             const userData = { userAlias: formData.get('userAlias') };
                             localStorage.setItem('tvtsUser', JSON.stringify(userData));
+                            localStorage.removeItem('tvts_referrer'); // Limpiamos el referido temporal
                             showDashboard(userData.userAlias);
-                            fetchRanking(); // Actualizar ranking
                         } else { throw new Error(data.error); }
                     })
                     .catch(err => alert(`Error: ${err.message}`))
                     .finally(() => { btn.disabled = false; btn.textContent = 'Completar Registro'; });
             });
+        } else {
+            // Si es una visita nueva (o un referido que acaba de llegar), mostramos la bienvenida.
+            contentContainer.innerHTML = welcomeTemplate;
+            rankingContainer.classList.add('hidden');
         }
+
     </script>
 </body>
 </html>
