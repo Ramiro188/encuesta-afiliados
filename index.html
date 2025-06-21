@@ -11,8 +11,10 @@
 </head>
 <body>
     <div class="container">
+        <!-- Contenido principal y unificado -->
         <div id="content-container"></div>
-        <div id="ranking-container" class="card hidden">
+        <!-- El ranking siempre estará visible después del contenido principal -->
+        <div id="ranking-container" class="card">
             <h2><i class="icon fas fa-ranking-star"></i>Top Agentes de Cambio</h2>
             <div id="ranking-list" class="ranking-list"></div>
         </div>
@@ -20,40 +22,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
-        const GITHUB_PAGE_URL = 'https://ramiro188.github.io/encuesta-afiliados/'; // TU URL EXACTA
-        const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
-
-        const contentContainer = document.getElementById('content-container');
-        const rankingContainer = document.getElementById('ranking-container');
-
-        const welcomeTemplate = `
-            <div class="card hero-section">
-                <i class="fas fa-bullhorn icon-display"></i>
-                <h1>Únete a "Tu Voz Tu Salud"</h1>
-                <p class="subtitle">Sigue los pasos para participar y competir por premios.</p>
-                <a href="${TALLY_FORM_URL}" class="cta-button">PASO 1: Realiza la Encuesta</a>
-            </div>`;
-        const registrationTemplate = (ref) => `
-            <div id="registration-section" class="card">
-                <h2><i class="icon fas fa-award"></i>¡Genial! Ahora, PASO 2: Regístrate</h2>
-                <form id="referralForm">
-                    <div class="form-group"><label for="userAlias">Crea tu Alias</label><input type="text" id="userAlias" name="userAlias" required></div>
-                    <div class="form-group"><label for="userYape">Tu Yape</label><input type="tel" id="userYape" name="userYape" required></div>
-                    <input type="hidden" id="referrerId" name="referrerId" value="${ref}">
-                    <button type="submit" id="submit-btn" class="btn-submit">Completar Registro</button>
-                </form>
-            </div>`;
-        const dashboardTemplate = (alias) => `
-            <div id="dashboard-section" class="card">
-                <h2><i class="icon fas fa-rocket"></i> ¡Todo listo, ${alias}!</h2>
-                <p class="dashboard-intro">Comparte TU ENLACE DE AFILIADO para que más personas se unan y subas en el ranking.</p>
-                <p style="text-align:center;font-weight:600;margin:20px 0 10px;">Tu enlace para compartir:</p>
-                <div class="referral-link-container">${GITHUB_PAGE_URL}?ref=${alias}</div>
-                <div class="dashboard-actions"><button id="copy-btn" class="btn-action">Copiar</button><button id="whatsapp-btn" class="btn-action">Compartir</button></div>
-            </div>`;
-
-        // --- ESTA FUNCIÓN RECIBIRÁ LOS DATOS DEL RANKING ---
+        // Definimos la función de callback en el scope global para que JSONP la encuentre
         window.handleRankingData = function(data) {
             const rankingList = document.getElementById('ranking-list');
             if (data && data.error) {
@@ -74,69 +43,101 @@
                 rankingList.innerHTML = '<p class="ranking-loader">¡Sé el primero en el ranking!</p>';
             }
         };
-        
-        // --- LA NUEVA FORMA DE PEDIR EL RANKING (JSONP) ---
-        function fetchRanking() {
-            const rankingList = document.getElementById('ranking-list');
-            rankingList.innerHTML = '<p class="ranking-loader">Cargando...</p>';
-            const scriptTagId = 'jsonp-ranking-script';
-            const oldScript = document.getElementById(scriptTagId);
-            if (oldScript) { oldScript.remove(); }
 
-            const script = document.createElement('script');
-            script.id = scriptTagId;
-            script.src = `${SCRIPT_URL}?callback=handleRankingData&cache_buster=${new Date().getTime()}`;
-            script.onerror = () => {
-                 rankingList.innerHTML = '<p class="ranking-loader" style="color:red;">Error de red al cargar el ranking.</p>';
-            };
-            document.head.appendChild(script);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdxnOk4gXUQIQKT1XWuWQTALNz2s9D3ME2BEnIssOyjCApFmHrB2EPG_g0GWNYiYiW/exec';
+            const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
+            const GITHUB_PAGE_URL = 'https://ramiro188.github.io/encuesta-afiliados/';
 
-        function showDashboard(alias) {
-            contentContainer.innerHTML = dashboardTemplate(alias);
-            rankingContainer.classList.remove('hidden');
-            const referralLink = `${GITHUB_PAGE_URL}?ref=${alias}`;
-            document.getElementById('copy-btn').onclick = () => { navigator.clipboard.writeText(referralLink).then(() => alert('¡Enlace copiado!')); };
-            document.getElementById('whatsapp-btn').onclick = () => { const msg = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú. Únete con mi enlace y participa por premios: ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank'); };
-            fetchRanking();
-        }
+            const contentContainer = document.getElementById('content-container');
 
-        function handleRegistration(event) {
-            event.preventDefault();
-            const form = event.target;
-            const btn = form.querySelector('#submit-btn');
-            btn.disabled = true;
-            btn.textContent = 'Registrando...';
-            const formData = new FormData(form);
-            fetch(SCRIPT_URL, { method: 'POST', body: formData }).then(res => res.json()).then(data => {
-                if (data.result === 'success') {
-                    const userData = { userAlias: formData.get('userAlias') };
-                    localStorage.setItem('tvtsUser', JSON.stringify(userData));
-                    showDashboard(userData.userAlias);
-                } else { throw new Error(data.error); }
-            }).catch(err => alert(`Error: ${err.message}`)).finally(() => { btn.disabled = false; btn.textContent = 'Completar Registro'; });
-        }
+            const welcomeTemplate = `
+                <div class="card hero-section">
+                    <i class="fas fa-check-circle icon-display"></i>
+                    <h1>¡Tu voz ya fue escuchada!</h1>
+                    <p class="subtitle">Gracias por completar la encuesta. Ahora, regístrate como Agente de Cambio para competir por premios.</p>
+                    <button id="show-registration-btn" class="cta-button">¡Registrarme ahora!</button>
+                </div>`;
+            const registrationTemplate = (ref) => `
+                <div id="registration-section" class="card">
+                    <h2><i class="icon fas fa-award"></i>Conviértete en Agente de Cambio</h2>
+                    <form id="referralForm">
+                        <div class="form-group"><label for="userAlias">Crea tu Alias</label><input type="text" id="userAlias" name="userAlias" required></div>
+                        <div class="form-group"><label for="userYape">Tu Yape</label><input type="tel" id="userYape" name="userYape" required></div>
+                        <input type="hidden" id="referrerId" name="referrerId" value="${ref}">
+                        <button type="submit" id="submit-btn" class="btn-submit">Completar Registro</button>
+                    </form>
+                </div>`;
+            const dashboardTemplate = (alias) => `
+                <div id="dashboard-section" class="card">
+                    <h2><i class="icon fas fa-rocket"></i> ¡Todo listo, ${alias}!</h2>
+                    <p class="dashboard-intro">Comparte tu enlace de Tally para que más personas se unan y subas en el ranking.</p>
+                    <p style="text-align:center;font-weight:600;margin:20px 0 10px;">Tu enlace de referido para compartir:</p>
+                    <div class="referral-link-container">${TALLY_FORM_URL}?ref=${alias}</div>
+                    <div class="dashboard-actions"><button id="copy-btn" class="btn-action">Copiar</button><button id="whatsapp-btn" class="btn-action">Compartir</button></div>
+                </div>`;
+            
+            function fetchRanking() {
+                const scriptTagId = 'jsonp-ranking-script';
+                const oldScript = document.getElementById(scriptTagId);
+                if (oldScript) oldScript.remove();
+                const script = document.createElement('script');
+                script.id = scriptTagId;
+                script.src = `${SCRIPT_URL}?callback=handleRankingData&cache_buster=${new Date().getTime()}`;
+                script.onerror = () => { document.getElementById('ranking-list').innerHTML = '<p class="ranking-loader" style="color:red;">Error de red al cargar ranking.</p>'; };
+                document.head.appendChild(script);
+            }
 
-        // --- LÓGICA DE INICIO ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const refIdFromUrl = urlParams.get('ref');
-        const sourceFromUrl = urlParams.get('source');
+            function showDashboard(alias) {
+                contentContainer.innerHTML = dashboardTemplate(alias);
+                const referralLink = `${TALLY_FORM_URL}?ref=${alias}`;
+                document.getElementById('copy-btn').onclick = () => { navigator.clipboard.writeText(referralLink).then(() => alert('¡Enlace copiado!')); };
+                document.getElementById('whatsapp-btn').onclick = () => { const msg = encodeURIComponent(`¡Hola! Ayúdame a transformar la salud en Perú: ${referralLink}`); window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank'); };
+            }
 
-        const savedUser = localStorage.getItem('tvtsUser');
-        if (savedUser) {
-            showDashboard(JSON.parse(savedUser).userAlias);
-        } else if (sourceFromUrl === 'tally') {
-            const referrer = refIdFromUrl || 'Directo';
-            contentContainer.innerHTML = registrationTemplate(referrer);
-            rankingContainer.classList.remove('hidden');
-            fetchRanking();
-            document.getElementById('referralForm').addEventListener('submit', handleRegistration);
-        } else {
-            localStorage.setItem('tvts_referrer', refIdFromUrl || 'Directo');
-            contentContainer.innerHTML = welcomeTemplate;
-            const surveyButton = document.getElementById('go-to-survey-btn');
-            surveyButton.href = TALLY_FORM_URL;
-        }
+            function handleRegistration(form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const btn = form.querySelector('#submit-btn');
+                    btn.disabled = true;
+                    btn.textContent = 'Registrando...';
+                    const formData = new FormData(form);
+                    fetch(SCRIPT_URL, { method: 'POST', body: formData }).then(res => res.json()).then(data => {
+                        if (data.result === 'success') {
+                            const userData = { userAlias: formData.get('userAlias') };
+                            localStorage.setItem('tvtsUser', JSON.stringify(userData));
+                            showDashboard(userData.userAlias);
+                            fetchRanking();
+                        } else { throw new Error(data.error); }
+                    }).catch(err => { alert(`Error: ${err.message}`); }).finally(() => { btn.disabled = false; btn.textContent = 'Completar Registro'; });
+                });
+            }
+
+            // --- LÓGICA DE INICIO ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const refIdFromUrl = urlParams.get('ref');
+            
+            const savedUser = localStorage.getItem('tvtsUser');
+            if (savedUser) {
+                showDashboard(JSON.parse(savedUser).userAlias);
+            } else if (refIdFromUrl) {
+                // Si hay un 'ref', mostramos el formulario de registro directamente.
+                const referrer = (refIdFromUrl && refIdFromUrl.toLowerCase() !== '@ref') ? refIdFromUrl : 'Directo';
+                contentContainer.innerHTML = registrationTemplate(referrer);
+                handleRegistration(document.getElementById('referralForm'));
+            } else {
+                // Si no hay 'ref' ni usuario guardado, mostramos la bienvenida.
+                contentContainer.innerHTML = welcomeTemplate;
+                document.getElementById('show-registration-btn').addEventListener('click', () => {
+                    contentContainer.innerHTML = registrationTemplate('Directo');
+                    handleRegistration(document.getElementById('referralForm'));
+                });
+            }
+            // El ranking se carga siempre, excepto en la bienvenida inicial.
+            if(savedUser || refIdFromUrl){
+                fetchRanking();
+            }
+        });
     </script>
 </body>
 </html>
