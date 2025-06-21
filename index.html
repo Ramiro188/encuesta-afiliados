@@ -1,112 +1,98 @@
+const SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/exec';
+const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
+const GITHUB_PAGE_URL = window.location.origin + window.location.pathname;
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <!-- ... estilos CSS existentes ... -->
-</head>
-<body>
-    <div class="container">
-        <div id="content-container"></div>
-        <div id="ranking-container" class="card hidden">
-            <h2><i class="icon fas fa-ranking-star"></i> Top Agentes de Cambio</h2>
-            <div id="ranking-list" class="ranking-list"></div>
-        </div>
-    </div>
+// Funciones mejoradas para manejar URLs y referidos
+function getURLParameter(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return decodeURIComponent(urlParams.get(param) || '');
+}
 
-    <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/exec';
-        const TALLY_FORM_URL = 'https://tally.so/r/mR15Xj';
-        const GITHUB_PAGE_URL = window.location.origin + window.location.pathname;
+function validateReferrer(ref) {
+    if (!ref || ref.trim() === '' || ref.toLowerCase() === '@ref') {
+        return 'Directo';
+    }
+    return ref.trim();
+}
 
-        // Mejorado: Manejo más robusto de parámetros URL
-        function getURLParameter(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param) || '';
+// Sistema robusto de carga de ranking con JSONP
+function loadRanking() {
+    const script = document.createElement('script');
+    const callbackName = `jsonp_callback_${Date.now()}`;
+    
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        script.parentNode.removeChild(script);
+        
+        if (data.error) {
+            console.error('Error en datos del ranking:', data.error);
+            return;
         }
+        
+        updateRankingDisplay(data);
+    };
 
-        // Mejorado: Validación de referidor
-        function validateReferrer(ref) {
-            if (!ref || ref.trim() === '' || ref.toLowerCase() === '@ref') {
-                return 'Directo';
-            }
-            return ref.trim();
-        }
+    script.src = `${SCRIPT_URL}?callback=${callbackName}`;
+    document.head.appendChild(script);
+}
 
-        // Mejorado: Manejo de errores SSL y conexión
-        async function fetchWithRetry(url, options = {}) {
-            const maxRetries = 3;
-            const retryDelay = 1000;
-            
-            for (let attempt = 1; attempt <= maxRetries; attempt++) {
-                try {
-                    const response = await fetch(url, {
-                        ...options,
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                            ...(options.headers || {})
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    return await response.json();
-                } catch (error) {
-                    if (attempt === maxRetries) {
-                        throw error;
-                    }
-                    await new Promise(resolve => setTimeout(resolve, retryDelay * attempt));
-                }
-            }
-        }
+function updateRankingDisplay(rankingData) {
+    const rankingList = document.getElementById('ranking-list');
+    
+    const medals = {
+        0: '🥇',
+        1: '🥈',
+        2: '🥉'
+    };
+    
+    rankingList.innerHTML = rankingData
+        .map((item, index) => `
+            <div class="ranking-item">
+                <div class="rank-pos">${medals[index] || `#${index + 1}`}</div>
+                <div class="rank-alias">${item.alias}</div>
+                <div class="rank-count">${item.count} referidos</div>
+            </div>
+        `)
+        .join('');
+}
 
-        // Mejorado: Actualización automática del ranking
-        function updateRanking() {
-            fetchWithRetry(`${SCRIPT_URL}?callback=handleRankingData`)
-                .then(response => {
-                    const script = document.createElement('script');
-                    script.textContent = response;
-                    document.head.appendChild(script);
-                })
-                .catch(error => console.error('Error al actualizar ranking:', error));
-        }
-
-        // Manejador JSONP para el ranking
-        function handleRankingData(data) {
-            if (data.error) {
-                console.error('Error en datos del ranking:', data.error);
-                return;
-            }
-            
-            const rankingList = document.getElementById('ranking-list');
-            rankingList.innerHTML = data
-                .map((item, index) => `
-                    <div class="ranking-item">
-                        <div class="rank-pos">#${index + 1}</div>
-                        <div class="rank-alias">${item.alias}</div>
-                        <div class="rank-count">${item.count} referidos</div>
-                    </div>
-                `)
-                .join('');
-        }
-
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', () => {
-            const referrer = validateReferrer(getURLParameter('ref'));
-            const savedUser = localStorage.getItem('tvtsUser');
-
-            if (savedUser) {
-                showDashboard(JSON.parse(savedUser).userAlias);
-            } else {
-                contentContainer.innerHTML = registrationTemplate(referrer);
-                initializeForm();
-            }
-
-            // Actualizar ranking cada minuto
-            updateRanking();
-            setInterval(updateRanking, 60000);
+// Manejo de registro con validación robusta
+async function handleRegistration(alias, yape, referrer) {
+    try {
+        const response = await fetch(`${SCRIPT_URL}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `userAlias=${encodeURIComponent(alias)}&userYape=${encodeURIComponent(yape)}&referrerId=${encodeURIComponent(referrer)}`
         });
-    </script>
-</body>
-</html>
+        
+        const result = await response.json();
+        
+        if (result.error) {
+            throw new Error(result.error);
+        }
+        
+        return result.alias;
+    } catch (error) {
+        console.error('Error en registro:', error);
+        throw error;
+    }
+}
+
+// Inicialización y configuración del sistema
+document.addEventListener('DOMContentLoaded', () => {
+    const referrer = validateReferrer(getURLParameter('ref'));
+    const savedUser = localStorage.getItem('tvtsUser');
+
+    if (savedUser) {
+        showDashboard(JSON.parse(savedUser).userAlias);
+    } else {
+        contentContainer.innerHTML = registrationTemplate(referrer);
+        initializeForm();
+    }
+
+    // Cargar ranking inicialmente y cada minuto
+    loadRanking();
+    setInterval(loadRanking, 60000);
+});
